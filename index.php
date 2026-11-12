@@ -99,8 +99,8 @@ require $ROOT . '/includes/header.php';
     <h1>Page Not Found</h1>
     <p class="hero-intro">The page you asked for is not here.</p>
     <div class="hero-ctas">
-      <a class="btn btn-ocean" href="<?= esc($SITE['phone_href']) ?>"><?= esc($SITE['phone']) ?></a>
-      <a class="btn btn-cream" href="/">Back to home</a>
+      <a class="btn btn-gold" href="<?= esc($SITE['phone_href']) ?>"><?= esc($SITE['phone']) ?></a>
+      <a class="btn btn-ivory" href="/">Back to home</a>
     </div>
   </div>
 </section>
@@ -112,8 +112,8 @@ exit;
 function hero_buttons($formTarget = '#request-service') {
     global $SITE;
     return '<div class="hero-ctas">' .
-        '<a class="btn btn-ocean" href="' . esc($SITE['phone_href']) . '">' . esc($SITE['phone']) . '</a>' .
-        '<a class="btn btn-cream" href="' . esc($formTarget) . '">Request Emergency Help</a>' .
+        '<a class="btn btn-gold" href="' . esc($SITE['phone_href']) . '">' . esc($SITE['phone']) . '</a>' .
+        '<a class="btn btn-ivory" href="' . esc($formTarget) . '">Request Emergency Help</a>' .
         '</div>';
 }
 
@@ -181,7 +181,7 @@ function render_home($form = null) {
 </div><aside class="sticky-aside"><div class="brand-panel">
   <p class="panel-title">Emergency Water Damage?</p>
   <p>A crew is dispatched immediately.</p>
-  <a class="btn btn-ocean" href="<?= esc($SITE['phone_href']) ?>"><?= esc($SITE['phone']) ?></a>
+  <a class="btn btn-gold" href="<?= esc($SITE['phone_href']) ?>"><?= esc($SITE['phone']) ?></a>
 </div><div class="aside-call">
   <p>Water damage restoration in San Bruno, CA starts the moment you pick up the phone.</p>
   <a class="btn btn-navy" href="#request-service">Request Emergency Help</a>

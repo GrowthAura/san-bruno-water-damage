@@ -20,7 +20,7 @@ $map_src = 'https://www.google.com/maps?q=' . rawurlencode($SITE['map_query']) .
       <p class="footer-nap"><span class="footer-nap-line"><a href="<?= esc($SITE['phone_href']) ?>"><?= esc($SITE['phone']) ?></a></span>
       <span class="footer-nap-line">San Bruno, CA 94066</span>
       <span class="footer-nap-line footer-hours">Open 24 hours, 7 days a week</span></p>
-      <a class="btn btn-ocean" href="<?= esc($SITE['phone_href']) ?>"><?= esc($SITE['phone']) ?></a>
+      <a class="btn btn-gold" href="<?= esc($SITE['phone_href']) ?>"><?= esc($SITE['phone']) ?></a>
     </div>
     <div class="footer-col">
       <p class="footer-h">Services</p>
@@ -48,7 +48,7 @@ $map_src = 'https://www.google.com/maps?q=' . rawurlencode($SITE['map_query']) .
       <p class="footer-nap"><span class="footer-nap-line"><a href="<?= esc($SITE['phone_href']) ?>"><?= esc($SITE['phone']) ?></a></span>
       <span class="footer-nap-line">San Bruno, CA 94066</span>
       <span class="footer-nap-line footer-hours">Open 24 hours, 7 days a week</span></p>
-      <a class="btn btn-cream" href="<?= esc($formTarget ?? '#request-service') ?>">Request Emergency Help</a>
+      <a class="btn btn-ivory" href="<?= esc($formTarget ?? '#request-service') ?>">Request Emergency Help</a>
     </div>
   </div>
   <div class="container footer-bottom">
