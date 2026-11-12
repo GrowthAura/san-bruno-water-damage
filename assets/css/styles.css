@@ -2,15 +2,15 @@
    swap happens before first paint; see qa/FIXES-ROUND3-2026-11-12.md). */
 @font-face{
   font-family:'Fraunces';font-style:normal;font-weight:400 700;font-display:swap;
-  src:url(/assets/fonts/fraunces-latin.woff2) format('woff2');
+  src:url(/san-bruno-water-damage/assets/fonts/fraunces-latin.woff2) format('woff2');
 }
 @font-face{
   font-family:'Fraunces';font-style:italic;font-weight:400 700;font-display:swap;
-  src:url(/assets/fonts/fraunces-italic-latin.woff2) format('woff2');
+  src:url(/san-bruno-water-damage/assets/fonts/fraunces-italic-latin.woff2) format('woff2');
 }
 @font-face{
   font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;
-  src:url(/assets/fonts/inter-latin.woff2) format('woff2');
+  src:url(/san-bruno-water-damage/assets/fonts/inter-latin.woff2) format('woff2');
 }
 
 /* ============================================================
