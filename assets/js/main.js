@@ -14,11 +14,19 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0 });
     revealEls.forEach(function (el) { observer.observe(el); });
   } else {
     revealEls.forEach(function (el) { el.classList.add('in'); });
   }
+  // Safety net: no content may ever stay hidden because an observer never
+  // fired (e.g. a very tall block on a short viewport). Reveal everything
+  // still hidden shortly after load.
+  setTimeout(function () {
+    document.querySelectorAll('.reveal:not(.in)').forEach(function (el) {
+      el.classList.add('in');
+    });
+  }, 900);
 
   // Header gains a shadow once the page scrolls.
   var header = document.querySelector('.site-header');
