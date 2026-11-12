@@ -127,7 +127,7 @@ function call_strip() {
 
 function final_cta_compact($formTarget = '#request-service') {
     global $FINAL_CTA_H2, $FINAL_CTA_PARAS;
-    $out = '<section class="final-cta"><div class="container"><div class="final-cta-card reveal">';
+    $out = '<section class="final-cta"><div class="container"><div class="final-cta-card">';
     $out .= '<h2>' . esc($FINAL_CTA_H2) . '</h2>';
     $out .= '<p>' . esc($FINAL_CTA_PARAS[0]) . '</p>';
     $out .= hero_buttons($formTarget);
@@ -174,11 +174,11 @@ function render_home($form = null) {
   <li><span class="check" aria-hidden="true">&#10003;</span><?= esc($t) ?></li>
   <?php endforeach; ?>
 </ul></div></section>
-<section class="section"><div class="container"><div class="split"><div class="content-block reveal">
+<section class="section"><div class="container"><div class="split"><div class="content-block">
   <h2><?= esc($FIRST_STEPS['h2']) ?></h2>
   <?php foreach ($FIRST_STEPS['paras'] as $p): ?><p><?= esc($p) ?></p><?php endforeach; ?>
   <?= bullets_html($FIRST_STEPS['bullets']) ?>
-</div><aside class="sticky-aside reveal"><div class="brand-panel">
+</div><aside class="sticky-aside"><div class="brand-panel">
   <p class="panel-title">Emergency Water Damage?</p>
   <p>A crew is dispatched immediately.</p>
   <a class="btn btn-ocean" href="<?= esc($SITE['phone_href']) ?>"><?= esc($SITE['phone']) ?></a>
@@ -186,7 +186,7 @@ function render_home($form = null) {
   <p>Water damage restoration in San Bruno, CA starts the moment you pick up the phone.</p>
   <a class="btn btn-navy" href="#request-service">Request Emergency Help</a>
 </div></aside></div></div></section>
-<section class="section section-cream"><div class="container content-block reveal">
+<section class="section section-cream"><div class="container content-block">
   <h2><?= esc($SERVICES_H2) ?></h2>
   <p class="lead"><?= esc($SERVICES_INTRO) ?></p>
   <div class="cards">
@@ -198,7 +198,7 @@ function render_home($form = null) {
     <?php endforeach; ?>
   </div>
 </div></section>
-<section class="section"><div class="container content-block reveal">
+<section class="section"><div class="container content-block">
   <h2><?= esc($WHY_H2) ?></h2>
   <p class="lead"><?= esc($WHY_INTRO) ?></p>
   <div class="cause-grid">
@@ -207,7 +207,7 @@ function render_home($form = null) {
   <?php endforeach; ?>
   </div>
 </div></section>
-<section class="section section-navy"><div class="container content-block reveal">
+<section class="section section-navy"><div class="container content-block">
   <h2><?= esc($PROCESS_H2) ?></h2>
   <p class="lead"><?= esc($PROCESS_INTRO) ?></p>
   <div class="phase-grid">
@@ -219,7 +219,7 @@ function render_home($form = null) {
     <?php endforeach; ?>
   </div>
 </div></section>
-<section class="section section-tint"><div class="container content-block reveal">
+<section class="section section-tint"><div class="container content-block">
   <h2><?= esc($CATEGORIES_H2) ?></h2>
   <p><?= esc($CATEGORIES_INTRO) ?></p>
   <div class="cat-grid">
@@ -232,7 +232,7 @@ function render_home($form = null) {
   </div>
   <p><?= esc($CATEGORIES_CLOSE) ?></p>
 </div></section>
-<section class="section"><div class="container content-block reveal">
+<section class="section"><div class="container content-block">
   <h2><?= esc($HOODS_H2) ?></h2>
   <p><?= esc($HOODS_INTRO) ?></p>
   <ul>
@@ -242,7 +242,7 @@ function render_home($form = null) {
   </ul>
   <?= render_para($HOODS_HUB_LINE, '/') ?>
 </div></section>
-<section class="section section-cream"><div class="container content-block reveal">
+<section class="section section-cream"><div class="container content-block">
   <h2><?= esc($NEARBY_H2) ?></h2>
   <p><?= esc($NEARBY_INTRO) ?></p>
   <ul>
@@ -261,7 +261,7 @@ function render_home($form = null) {
     <?php endforeach; ?>
   </div>
 </div></section>
-<section class="section"><div class="container content-block reveal">
+<section class="section"><div class="container content-block">
   <h2><?= esc($BUSINESS_H2) ?></h2>
   <p><?= esc($BUSINESS_PARA) ?></p>
   <hr class="doc-divide">
@@ -283,7 +283,7 @@ function render_home($form = null) {
   <?= bullets_html($CHOOSING_BULLETS) ?>
   <p><?= esc($CHOOSING_CLOSE) ?></p>
 </div></section>
-<section class="section section-cream"><div class="container content-block reveal">
+<section class="section section-cream"><div class="container content-block">
   <h2><?= esc($FAQ_H2) ?></h2>
   <div class="faq-list">
     <?php foreach ($FAQS as $f): ?>
@@ -295,7 +295,7 @@ function render_home($form = null) {
   </div>
 </div></section>
 <?= call_strip() ?>
-<section class="final-cta"><div class="container"><div class="final-cta-card reveal">
+<section class="final-cta"><div class="container"><div class="final-cta-card">
   <h2><?= esc($FINAL_CTA_H2) ?></h2>
   <?php foreach ($FINAL_CTA_PARAS as $p): ?><p><?= esc($p) ?></p><?php endforeach; ?>
   <?= hero_buttons() ?>
@@ -362,7 +362,7 @@ function render_page($slug, $page, $form = null) {
     <?= hero_buttons($formTarget) ?>
   </div>
 </section>
-<section class="section"><div class="container content-block reveal">
+<section class="section"><div class="container content-block">
   <?= crumbs_html($crumbs) ?>
   <?php $blocks = $page['content']['blocks'];
         echo render_blocks(array_slice($blocks, 0, 1), $slug); ?>
