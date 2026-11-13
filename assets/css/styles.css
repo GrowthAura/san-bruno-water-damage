@@ -152,7 +152,7 @@ li{margin-bottom:.5em}
 }
 .topbar-inner{max-width:var(--maxw-wide);margin:0 auto;padding:9px 28px;
   display:flex;justify-content:space-between;align-items:center;gap:16px}
-.topbar a{color:var(--gold-deep);font-weight:700}
+.topbar a{color:var(--gold-deep);font-weight:700;display:inline-block;padding:2px 0} /* Cycle 3 P3-1: tap target ~23.6px -> ~27.6px (>=24px WCAG 2.2) */
 .site-header{
   position:sticky;top:0;z-index:100;background:rgba(253,252,248,.96);
   backdrop-filter:blur(8px);border-bottom:1px solid var(--line-soft);
@@ -291,6 +291,9 @@ li{margin-bottom:.5em}
 
 /* ---------- Why / cause / home grids ---------- */
 .cause-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:28px}
+/* 5 reasons in a 2-col grid: the last card spans both columns as a full-width
+   closing card instead of sitting alone in the left column (watchdog Phase 1). */
+.cause-grid .cause-card:last-child{grid-column:1 / -1}
 .cause-card{
   background:#fff;border:1px solid var(--line-soft);border-radius:var(--radius);
   padding:26px 28px;box-shadow:var(--shadow-sm);
@@ -312,8 +315,6 @@ li{margin-bottom:.5em}
   background:linear-gradient(transparent,rgba(7,18,35,.88));
   color:#fff;font-weight:700;font-size:15px;
 }
-.area-card-link{display:block}
-.area-card-link:hover .area-card img{transform:scale(1.04)}
 .area-card img{transition:transform .3s ease}
 
 /* ---------- FAQ ---------- */
@@ -379,7 +380,7 @@ li{margin-bottom:.5em}
 
 /* ---------- Breadcrumbs / detail figure ---------- */
 .crumbs{font-size:16px;color:var(--muted);margin-bottom:22px}
-.crumbs a{color:var(--gold-deep)}
+.crumbs a{color:var(--gold-deep);display:inline-block;padding:3px 0;line-height:20px} /* Cycle 3 P3-1: tap target 20px -> 26px (>=24px WCAG 2.2) */
 .crumbs span[aria-hidden="true"]{margin:0 8px}
 .detail-figure{margin:28px 0;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)}
 .detail-figure img{width:100%;aspect-ratio:16/9;object-fit:cover}
@@ -389,7 +390,7 @@ li{margin-bottom:.5em}
 .footer-map-wrap{height:340px}
 .footer-map{width:100%;height:100%;border:0;display:block}
 .site-footer{background:var(--ink);color:#B9C7D4;padding:64px 0 0}
-.footer-cols{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:40px;padding-bottom:48px}
+.footer-cols{display:grid;grid-template-columns:1.35fr 1fr 1fr 1.35fr;gap:40px;padding-bottom:48px}
 .footer-h{
   font-family:var(--font-display);color:#fff;font-size:1.15rem;font-weight:650;
   margin-bottom:16px;
@@ -399,7 +400,7 @@ li{margin-bottom:.5em}
   background:var(--gold);margin-top:10px;
 }
 .footer-col p{font-size:16px}
-.footer-col a:not(.btn){color:#DCE6EF}
+.footer-col a:not(.btn){color:#DCE6EF;display:inline-block;padding:2px 0} /* Cycle 3 P3-1: tap target 21px -> 25px (>=24px WCAG 2.2) */
 .footer-col a:hover{color:#fff}
 .footer-col ul{list-style:none;margin:0}
 .footer-col li{margin-bottom:8px}
@@ -421,15 +422,20 @@ li{margin-bottom:.5em}
   box-shadow:0 14px 34px rgba(201,162,39,.45);
 }
 .mobile-call-bar:hover{color:var(--ink)}
-html.callbar-on .mobile-call-bar{display:flex}
+/* Call bar is a MOBILE pattern only: it must never appear on desktop, where
+   it would float over page content after any scroll (watchdog Phase 1). */
+@media (max-width:1020px){html.callbar-on .mobile-call-bar{display:flex}}
 .mobile-call-spacer{display:none}
 
 /* Gold list markers + anchor scroll offset under the sticky header. */
 .content-block ul li::marker{color:var(--gold)}
 .content-block ol li::marker{color:var(--gold-deep);font-weight:700}
 #request-service,.form-card{scroll-margin-top:calc(var(--header-h) + 16px)}
-.js .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
-.js .reveal.in{opacity:1;transform:none}
+/* NOTE (watchdog Phase 1): no scroll-hidden-on-load behaviour exists on this
+   site. The old hidden-on-load rules, the `js` document class and the
+   IntersectionObserver in main.js were removed outright, so no content can
+   ever be hidden on load again — first paint always shows text with zero JS
+   dependency. */
 
 /* ============================================================
    RESPONSIVE — overrides AFTER base rules

@@ -85,7 +85,9 @@ http_response_code(404);
 $HEAD = [
     'title' => 'Page Not Found | ' . $SITE['brand'],
     'description' => 'The page you asked for is not here. Call ' . $SITE['phone'] . ' for 24/7 emergency water damage help in San Bruno, CA 94066.',
-    'canonical' => site_url('/'),
+    // No canonical on a 404 (it must not canonicalise to the homepage) and
+    // noindex: the 404 status already prevents indexing; the meta makes it explicit.
+    'robots' => 'noindex, follow',
     'og_type' => 'website',
     'ld' => ld_json([ld_local_business()]),
 ];
@@ -147,13 +149,14 @@ function render_home($form = null) {
         $CHOOSING_BULLETS, $CHOOSING_CLOSE, $FAQ_H2, $FAQS, $FINAL_CTA_H2,
         $FINAL_CTA_PARAS;
     $homeHero = page_img('/', 'hero');
+    $homeOg = $homeHero ?: og_fallback_img();
     $HEAD = [
         'title' => $HOME_META['title'],
         'description' => $HOME_META['description'],
         'canonical' => site_url('/'),
         'og_type' => 'website',
-        'og_image' => $homeHero ? site_url($homeHero['src']) : null,
-        'ld' => ld_json([ld_local_business(), ld_website(), ld_webpage(), ld_breadcrumb_home(), ld_faq($FAQS), ld_howto($PROCESS_STEPS, $PROCESS_INTRO)]),
+        'og_image' => $homeOg ? site_url($homeOg['src']) : null,
+        'ld' => ld_json([ld_local_business(), ld_website(), ld_webpage($homeHero ? site_url($homeHero['src']) : null), ld_breadcrumb_home(), ld_faq($FAQS), ld_howto($PROCESS_STEPS, $PROCESS_INTRO)]),
     ];
     $currentSlug = '/';
     $formTarget = '#request-service';
@@ -161,7 +164,7 @@ function render_home($form = null) {
     require $ROOT . '/includes/header.php';
     ?>
 <section class="hero">
-  <?php if ($homeHero): ?><div class="hero-media"><img src="<?= esc($homeHero['src']) ?>" alt="<?= esc($homeHero['alt']) ?>" width="1600" height="900" fetchpriority="high"></div><?php endif; ?>
+  <?php if ($homeHero): ?><div class="hero-media"><?= hero_img_tag($homeHero) ?></div><?php endif; ?>
   <div class="container hero-content">
     <p class="eyebrow on-navy"><?= esc($HOME_META['eyebrow']) ?></p>
     <h1><?= esc($HOME_META['h1']) ?></h1>
@@ -213,7 +216,7 @@ function render_home($form = null) {
   <div class="phase-grid">
     <?php foreach ($PROCESS_STEPS as $i => $s): $pimg = page_img('process-' . ($i + 1), 'img'); ?>
     <div class="phase-card">
-      <?php if ($pimg): ?><div class="phase-media"><img src="<?= esc($pimg['src']) ?>" alt="<?= esc($pimg['alt']) ?>" width="1200" height="675" loading="lazy"></div><?php endif; ?>
+      <?php if ($pimg): ?><div class="phase-media"><?= img_tag($pimg, 1200, 675) ?></div><?php endif; ?>
       <h3><?= esc($s['h3']) ?></h3><p><?= esc($s['text']) ?></p>
     </div>
     <?php endforeach; ?>
@@ -250,14 +253,19 @@ function render_home($form = null) {
     <li><?= linkify($a['line'], $a['anchor'], $a['slug'], '/') ?></li>
     <?php endforeach; ?>
   </ul>
+</div>
+<div class="container">
+  <?php /* Area strip breaks out of the 88ch text column to the full container
+         (watchdog Phase 1): 5 cards at 168px each cramped the city labels to
+         3 lines; at full width each card is ~230px and labels fit in 2. */ ?>
   <div class="area-strip">
     <?php foreach ($AREAS as $a): $aimg = page_img($a['slug'], 'card'); ?>
-    <a class="area-card-link" href="<?= esc($a['slug']) ?>">
-      <div class="area-card">
-        <?= img_tag($aimg, 1200, 675) ?>
-        <span><?= esc($a['city']) ?>, CA <?= esc($a['zip']) ?></span>
-      </div>
-    </a>
+    <?php /* No link on the card: the nearby-areas list above already links
+           each city once (doc link); one link per target per page. */ ?>
+    <div class="area-card">
+      <?= img_tag($aimg, 1200, 675) ?>
+      <span><?= esc($a['city']) ?>, CA <?= esc($a['zip']) ?></span>
+    </div>
     <?php endforeach; ?>
   </div>
 </div></section>
@@ -287,7 +295,7 @@ function render_home($form = null) {
   <h2><?= esc($FAQ_H2) ?></h2>
   <div class="faq-list">
     <?php foreach ($FAQS as $f): ?>
-    <details>
+    <details open>
       <summary><h3><?= esc($f['q']) ?></h3><span class="faq-toggle" aria-hidden="true">+</span></summary>
       <div class="faq-answer"><p><?= esc($f['a']) ?></p></div>
     </details>
@@ -324,38 +332,58 @@ function render_page($slug, $page, $form = null) {
         $crumbLabel = $page['content']['crumb'] ?? $page['h1'];
     }
     $crumbs[] = ['label' => $crumbLabel];
-    $graph = [ld_local_business(), ld_breadcrumb($crumbs)];
+    $pageHero = page_img($slug, 'hero');
+    $pageOg = $pageHero ?: og_fallback_img();
+    $heroUrl = $pageHero ? site_url($pageHero['src']) : null;
+    // Social sharing falls back to the site-wide og image when a page has no
+    // own hero (Cycle 3 P2-1); schema $heroUrl stays honest (null = no image).
+    // Honest WebPage subtype where one applies (AboutPage / ContactPage).
+    $wpType = $page['type'] === 'about' ? 'AboutPage'
+            : ($page['type'] === 'contact' ? 'ContactPage' : 'WebPage');
+    $graph = [ld_local_business(), ld_website(),
+              ld_webpage_inner($slug, $meta['title'], $meta['description'],
+                               $heroUrl, $wpType),
+              ld_breadcrumb($crumbs, site_url($slug))];
     if ($page['type'] === 'service') {
-        $graph[] = ld_service($page['summary']['h3'], 'San Bruno');
+        $graph[] = ld_service($page['summary']['h3'], 'San Bruno', $slug, $meta['description'], $heroUrl);
     }
     if ($page['type'] === 'area') {
-        $graph[] = ld_service('Water Damage Restoration', $page['area']['city']);
+        $graph[] = ld_service('Water Damage Restoration in ' . $page['area']['city'] . ', CA',
+                              $page['area']['city'], $slug, $meta['description'], $heroUrl);
+    }
+    if ($page['type'] === 'area-hub') {
+        $graph[] = ld_itemlist($slug);
     }
     if ($page['type'] === 'blog') {
         $graph[] = ld_blog($page, $slug);
+    }
+    if ($page['type'] === 'guide') {
+        $graph[] = ld_article($page, $slug, $heroUrl);
     }
     $pageFaqs = !empty($page['content']['blocks']) ? page_faqs($page['content']['blocks']) : [];
     if ($pageFaqs) {
         $graph[] = ld_faq($pageFaqs, site_url($slug));
     }
-    $pageHero = page_img($slug, 'hero');
     $HEAD = [
         'title' => $meta['title'],
         'description' => $meta['description'],
         'canonical' => site_url($slug),
-        'og_type' => 'website',
-        'og_image' => $pageHero ? site_url($pageHero['src']) : null,
+        // Article pages share as og:type article; service/area/hub pages
+        // stay website (no article type exists for them).
+        'og_type' => in_array($page['type'], ['blog', 'guide'], true) ? 'article' : 'website',
+        'og_image' => $pageOg ? site_url($pageOg['src']) : null,
         'ld' => ld_json($graph),
     ];
     $currentSlug = $slug;
-    // Button 2 target, page-aware: service pages carry the form on the page;
-    // area / hub / guide pages have no form, so Button 2 goes to the home form.
-    $formTarget = ($page['type'] === 'service') ? '#request-service' : '/#request-service';
+    // Button 2 target, page-aware: service + contact pages carry the form on
+    // the page; area / hub / guide pages have no form, so Button 2 goes to
+    // the home form.
+    $formTarget = in_array($page['type'], ['service', 'contact'], true) ? '#request-service' : '/#request-service';
     $show_map = !in_array($page['type'], ['area', 'area-hub'], true);
     require $ROOT . '/includes/header.php';
     ?>
 <section class="hero hero-short">
-  <?php if ($pageHero): ?><div class="hero-media"><img src="<?= esc($pageHero['src']) ?>" alt="<?= esc($pageHero['alt']) ?>" width="1600" height="900" fetchpriority="high"></div><?php endif; ?>
+  <?php if ($pageHero): ?><div class="hero-media"><?= hero_img_tag($pageHero) ?></div><?php endif; ?>
   <div class="container hero-content">
     <p class="eyebrow on-navy"><?= esc($page['content']['eyebrow'] ?? $HOME_META['eyebrow']) ?></p>
     <h1><?= esc($page['h1']) ?></h1>
@@ -370,7 +398,7 @@ function render_page($slug, $page, $form = null) {
   <figure class="detail-figure"><?= img_tag($detail, 1200, 675) ?></figure>
   <?php endif; ?>
   <?= render_blocks(array_slice($blocks, 1), $slug) ?>
-  <?php if ($page['type'] === 'service'): ?>
+  <?php if (in_array($page['type'], ['service', 'contact'], true)): ?>
   <div class="form-wrap">
     <?php require $ROOT . '/includes/lead-form.php'; ?>
   </div>

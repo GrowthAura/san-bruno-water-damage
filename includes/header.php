@@ -8,23 +8,22 @@ global $SITE, $SERVICES, $AREAS, $COST_GUIDE, $STORM_GUIDE;
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<script>document.documentElement.classList.add('js');</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><?= esc($HEAD['title']) ?></title>
 <meta name="description" content="<?= esc($HEAD['description']) ?>">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="<?= esc($HEAD['canonical']) ?>">
+<meta name="robots" content="<?= esc($HEAD['robots'] ?? 'index, follow') ?>">
+<?php if (!empty($HEAD['canonical'])): ?><link rel="canonical" href="<?= esc($HEAD['canonical']) ?>"><?php endif; ?>
 <meta property="og:type" content="<?= esc($HEAD['og_type'] ?? 'website') ?>">
 <meta property="og:title" content="<?= esc($HEAD['title']) ?>">
 <meta property="og:description" content="<?= esc($HEAD['description']) ?>">
-<meta property="og:url" content="<?= esc($HEAD['canonical']) ?>">
+<?php if (!empty($HEAD['canonical'])): ?><meta property="og:url" content="<?= esc($HEAD['canonical']) ?>"><?php endif; ?>
 <meta property="og:site_name" content="<?= esc($SITE['brand']) ?>">
-<?php $ogImage = $HEAD['og_image'] ?? site_url('/assets/img/hero-san-bruno-water-damage.jpg'); ?>
-<meta property="og:image" content="<?= esc($ogImage) ?>">
+<?php $ogImage = $HEAD['og_image'] ?? null; ?>
+<?php if ($ogImage): ?><meta property="og:image" content="<?= esc($ogImage) ?>"><?php endif; ?>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="<?= esc($HEAD['title']) ?>">
 <meta name="twitter:description" content="<?= esc($HEAD['description']) ?>">
-<meta name="twitter:image" content="<?= esc($ogImage) ?>">
+<?php if ($ogImage): ?><meta name="twitter:image" content="<?= esc($ogImage) ?>"><?php endif; ?>
 <meta name="theme-color" content="#0A1A2F">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="icon" href="/favicon.ico?v=2">
@@ -34,9 +33,8 @@ global $SITE, $SERVICES, $AREAS, $COST_GUIDE, $STORM_GUIDE;
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
 <link rel="preload" href="/assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/styles.css?v=6">
+<link rel="stylesheet" href="/assets/css/styles.css?v=8">
 <?= $HEAD['ld'] ?? '' ?>
-<noscript><style>.reveal{opacity:1 !important;transform:none !important;}</style></noscript>
 </head>
 <body>
 <header class="site-header">

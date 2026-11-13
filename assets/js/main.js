@@ -1,32 +1,10 @@
 // San Bruno Water Damage Restoration — vanilla JS only.
-// Reveal-on-scroll via IntersectionObserver; mobile menu closes when a link
-// inside it is tapped, on Escape, and on scroll. FAQ uses native <details>,
-// no JS needed.
+// No scroll-hidden-on-load behaviour anywhere on this site (removed watchdog
+// Phase 1): content is visible on first paint with zero JS dependency.
+// Mobile menu closes when a link inside it is tapped, on Escape, and on
+// scroll. FAQ uses native <details>, no JS needed.
 (function () {
   'use strict';
-
-  var revealEls = document.querySelectorAll('.reveal');
-  if ('IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0 });
-    revealEls.forEach(function (el) { observer.observe(el); });
-  } else {
-    revealEls.forEach(function (el) { el.classList.add('in'); });
-  }
-  // Safety net: no content may ever stay hidden because an observer never
-  // fired (e.g. a very tall block on a short viewport). Reveal everything
-  // still hidden shortly after load.
-  setTimeout(function () {
-    document.querySelectorAll('.reveal:not(.in)').forEach(function (el) {
-      el.classList.add('in');
-    });
-  }, 900);
 
   // Header gains a shadow once the page scrolls.
   var header = document.querySelector('.site-header');

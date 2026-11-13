@@ -106,7 +106,7 @@ function render_blocks($blocks, $currentSlug = null) {
                 $faqOpen = true;
             }
             $f = $b['faq'];
-            $out .= '<details><summary><h3>' . esc($f['q']) . '</h3>'
+            $out .= '<details open><summary><h3>' . esc($f['q']) . '</h3>'
                 . '<span class="faq-toggle" aria-hidden="true">+</span></summary>'
                 . '<div class="faq-answer">';
             foreach ($f['a'] as $ap) {
@@ -274,7 +274,7 @@ function page_meta($slug, $pages) {
 // ---- JSON-LD -------------------------------------------------------------
 function ld_local_business() {
     global $SITE;
-    return [
+    $lb = [
         '@type' => 'LocalBusiness',
         '@id' => site_url('/') . '#business',
         'name' => $SITE['brand'],
@@ -303,6 +303,14 @@ function ld_local_business() {
             'opens' => '00:00', 'closes' => '23:59',
         ],
     ];
+    // Representative image: the site's own homepage hero (a real on-topic
+    // San Bruno restoration photo). No logo is claimed: the favicon mark is
+    // not presented as a logo.
+    if (function_exists('page_img')) {
+        $hero = page_img('/', 'hero');
+        if ($hero) $lb['image'] = site_url($hero['src']);
+    }
+    return $lb;
 }
 
 function ld_website() {
@@ -312,34 +320,102 @@ function ld_website() {
         '@id' => site_url('/') . '#website',
         'url' => site_url('/'),
         'name' => $SITE['brand'],
+        'inLanguage' => 'en',
+        // The site is published by the business itself: reference the single
+        // business entity by @id, not a second inline Organization.
+        'publisher' => ['@id' => site_url('/') . '#business'],
     ];
 }
 
-function ld_breadcrumb($crumbs) {
+function ld_breadcrumb($crumbs, $pageUrl = null) {
     $items = [];
     $i = 1;
+    $n = count($crumbs);
     foreach ($crumbs as $c) {
         $item = ['@type' => 'ListItem', 'position' => $i, 'name' => $c['label']];
-        if (!empty($c['href'])) $item['item'] = site_url($c['href']);
+        if (!empty($c['href'])) {
+            $item['item'] = site_url($c['href']);
+        } elseif ($pageUrl !== null && $i === $n) {
+            // Current page: no visible link, but its canonical URL is its item.
+            $item['item'] = $pageUrl;
+        }
         $items[] = $item;
         $i++;
     }
-    return ['@type' => 'BreadcrumbList', 'itemListElement' => $items];
+    $bc = ['@type' => 'BreadcrumbList', 'itemListElement' => $items];
+    if ($pageUrl !== null) $bc['@id'] = $pageUrl . '#breadcrumb';
+    return $bc;
 }
 
-function ld_webpage() {
+function ld_webpage($heroSrc = null) {
     global $SITE, $HOME_META;
-    return [
+    $wp = [
         '@type' => 'WebPage',
         '@id' => site_url('/') . '#webpage',
         'url' => site_url('/'),
         'name' => $HOME_META['title'],
+        'description' => $HOME_META['description'],
+        'inLanguage' => 'en',
         'isPartOf' => ['@id' => site_url('/') . '#website'],
         'about' => ['@id' => site_url('/') . '#business'],
+        'breadcrumb' => ['@id' => site_url('/') . '#breadcrumb'],
         'speakable' => [
             '@type' => 'SpeakableSpecification',
             'cssSelector' => ['.hero-intro', '.faq-list details summary h3'],
         ],
+    ];
+    if ($heroSrc) $wp['primaryImageOfPage'] = $heroSrc;
+    return $wp;
+}
+
+// WebPage node for an inner page. Every inner page carries one: name and
+// description are that page's own verbatim meta; the FAQ selector resolves
+// on all 27 inner pages (each has an FAQ list). Inner heroes have no
+// .hero-intro element, so only the FAQ selector is speakable there.
+// $type is the honest WebPage subtype where one applies: AboutPage for
+// /about, ContactPage for /contact, plain WebPage everywhere else.
+function ld_webpage_inner($slug, $title, $description, $heroSrc = null, $type = 'WebPage') {
+    $url = site_url($slug);
+    $wp = [
+        '@type' => $type,
+        '@id' => $url . '#webpage',
+        'url' => $url,
+        'name' => $title,
+        'description' => $description,
+        'inLanguage' => 'en',
+        'isPartOf' => ['@id' => site_url('/') . '#website'],
+        'about' => ['@id' => site_url('/') . '#business'],
+        'breadcrumb' => ['@id' => $url . '#breadcrumb'],
+        'speakable' => [
+            '@type' => 'SpeakableSpecification',
+            'cssSelector' => ['.faq-list details summary h3'],
+        ],
+    ];
+    if ($heroSrc) $wp['primaryImageOfPage'] = $heroSrc;
+    return $wp;
+}
+
+// ItemList for the /service-areas hub: the page IS a list of the 5 area
+// pages, in the page's own order ($AREAS). Items carry the area page URL
+// plus the same "Water Damage Restoration in {City}, CA" name the area
+// Service nodes use — no @id refs to other pages' entities.
+function ld_itemlist($slug) {
+    global $AREAS;
+    $items = [];
+    $i = 1;
+    foreach ($AREAS as $a) {
+        $items[] = [
+            '@type' => 'ListItem',
+            'position' => $i++,
+            'item' => site_url($a['slug']),
+            'name' => 'Water Damage Restoration in ' . $a['city'] . ', CA',
+        ];
+    }
+    return [
+        '@type' => 'ItemList',
+        '@id' => site_url($slug) . '#itemlist',
+        'name' => 'Water Damage Restoration Service Areas',
+        'itemListElement' => $items,
     ];
 }
 
@@ -384,42 +460,80 @@ function ld_faq($faqs, $pageUrl = null) {
             'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f['a']],
         ];
     }
-    // $pageUrl: inner pages point at themselves; homepage call keeps default.
-    $main = $pageUrl ? ['@id' => $pageUrl] : ['@id' => site_url('/') . '#webpage'];
-    return ['@type' => 'FAQPage', '@id' => site_url('/') . '#faqpage',
+    // Per-page @id: the old code gave every page the same '#faqpage' @id,
+    // so 28 distinct FAQPage entities claimed one identity. mainEntityOfPage
+    // points at the page's own WebPage node, which now exists on every page.
+    $base = $pageUrl ? $pageUrl : site_url('/');
+    $main = ['@id' => $base . '#webpage'];
+    return ['@type' => 'FAQPage', '@id' => $base . '#faqpage',
             'mainEntityOfPage' => $main,
             'mainEntity' => $items];
 }
 
-function ld_service($name, $areaName) {
+function ld_service($name, $areaName, $slug, $description, $heroSrc = null) {
     global $SITE;
-    return [
+    $svc = [
         '@type' => 'Service',
+        '@id' => site_url($slug) . '#service',
         'name' => $name,
+        'description' => $description,
+        'url' => site_url($slug),
         'serviceType' => 'Water Damage Restoration',
-        'provider' => [
-            '@type' => 'LocalBusiness',
-            'name' => $SITE['brand'],
-            'telephone' => $SITE['phone'],
-        ],
+        // Reference the single business entity by @id instead of a second,
+        // partial inline LocalBusiness (name + phone only, no identity).
+        'provider' => ['@id' => site_url('/') . '#business'],
         'areaServed' => ['@type' => 'City', 'name' => $areaName],
     ];
+    // The page's own hero depicts this service in this place; where the
+    // page has one, it is honestly the service image. Hero-less pages
+    // carry no image (no fallback to another page's photo).
+    if ($heroSrc) $svc['image'] = $heroSrc;
+    return $svc;
 }
 
 function ld_blog($page, $slug) {
     global $SITE;
     return [
         '@type' => 'BlogPosting',
+        '@id' => site_url($slug) . '#article',
         'headline' => $page['h1'],
         'description' => $page['content']['meta']['description'],
-        'mainEntityOfPage' => site_url($slug),
-        'author' => ['@type' => 'Organization', 'name' => $SITE['brand'],
-                     'url' => site_url('/')],
-        'publisher' => ['@type' => 'Organization', 'name' => $SITE['brand'],
-                        'url' => site_url('/')],
+        'inLanguage' => 'en',
+        'mainEntityOfPage' => ['@id' => site_url($slug) . '#webpage'],
+        // Author/publisher are the business itself: reference the single
+        // business entity by @id. The old inline Organization (name + url,
+        // no @id) was a second, identity-less copy of the same org.
+        'author' => ['@id' => site_url('/') . '#business'],
+        'publisher' => ['@id' => site_url('/') . '#business'],
     ];
 }
-// NOTE: no datePublished — the doc gives no publish date; do not invent one.
+// NOTE: no datePublished / dateModified — the doc gives no publish date;
+// do not invent one. No image either: the 3 blog pages have no hero or
+// detail photo (see data/media.php — no entries for these slugs), and the
+// homepage-hero og:image fallback would misrepresent the article.
+
+// Article for the 2 guide-type resource pages (cost guide, storm
+// checklist): they are reference articles, not blog posts, so BlogPosting
+// would mislabel them. Same honest field set as ld_blog, no dates.
+function ld_article($page, $slug, $heroSrc = null) {
+    global $SITE;
+    $art = [
+        '@type' => 'Article',
+        '@id' => site_url($slug) . '#article',
+        'headline' => $page['h1'],
+        'description' => $page['content']['meta']['description'],
+        'inLanguage' => 'en',
+        'mainEntityOfPage' => ['@id' => site_url($slug) . '#webpage'],
+        // Author/publisher are the business itself: reference the single
+        // business entity by @id (see ld_blog — no inline partial org).
+        'author' => ['@id' => site_url('/') . '#business'],
+        'publisher' => ['@id' => site_url('/') . '#business'],
+    ];
+    // Both guides have their own hero on the page; it honestly is the
+    // article image. (BlogPosting keeps no image: those pages have none.)
+    if ($heroSrc) $art['image'] = $heroSrc;
+    return $art;
+}
 
 function ld_json($graph) {
     $data = ['@context' => 'https://schema.org', '@graph' => $graph];
