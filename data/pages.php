@@ -22,7 +22,7 @@ $SITE = [
     'phone_plain' => '6508226798',
     'hours'       => '24/7',
     'map_query'   => 'San Bruno, CA 94066',
-    'url'         => 'https://growthaura.github.io/san-bruno-water-damage',
+    'url'         => 'https://www.sanbrunowaterdamagerestoration.us',
 ];
 
 $HOME_META = [
