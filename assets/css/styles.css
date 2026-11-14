@@ -384,7 +384,6 @@ li{margin-bottom:.5em}
 .crumbs span[aria-hidden="true"]{margin:0 8px}
 .detail-figure{margin:28px 0;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)}
 .detail-figure img{width:100%;aspect-ratio:16/9;object-fit:cover}
-.back-home{margin-top:8px}
 
 /* ---------- Footer map + footer ---------- */
 .footer-map-wrap{height:340px}

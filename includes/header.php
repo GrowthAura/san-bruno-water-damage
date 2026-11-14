@@ -60,24 +60,9 @@ global $SITE, $SERVICES, $AREAS, $COST_GUIDE, $STORM_GUIDE;
           <?php endforeach; ?>
         </div>
       </details>
-      <details>
-        <summary>Service Areas</summary>
-        <div class="nav-drop">
-          <p class="drop-group">Nearby Cities</p>
-          <?php foreach ($AREAS as $a): ?>
-          <a href="<?= esc($a['slug']) ?>"><?= esc($a['city']) ?>, CA <?= esc($a['zip']) ?></a>
-          <?php endforeach; ?>
-          <a href="/service-areas">View all service areas</a>
-        </div>
-      </details>
-      <details>
-        <summary>Resources</summary>
-        <div class="nav-drop">
-          <p class="drop-group">Guides</p>
-          <a href="<?= esc($COST_GUIDE['slug']) ?>">Water Damage Restoration Cost</a>
-          <a href="<?= esc($STORM_GUIDE['slug']) ?>">Belle Air Storm Flood Checklist</a>
-        </div>
-      </details>
+      <a href="/service-areas">Service Areas</a>
+      <a href="/about">About Us</a>
+      <a href="/contact">Contact Us</a>
     </nav>
     <a class="btn btn-gold header-cta" href="<?= esc($SITE['phone_href']) ?>"><?= esc($SITE['phone']) ?></a>
     <div class="mobile-head">
@@ -90,14 +75,12 @@ global $SITE, $SERVICES, $AREAS, $COST_GUIDE, $STORM_GUIDE;
           <?php foreach (core_services() as $s): ?>
           <a href="<?= esc($s['slug']) ?>"><?= esc($s['nav']) ?></a>
           <?php endforeach; ?>
-          <p class="drop-group">Service Areas</p>
+          <a class="drop-group" href="/service-areas">Service Areas</a>
           <?php foreach ($AREAS as $a): ?>
           <a href="<?= esc($a['slug']) ?>"><?= esc($a['city']) ?>, CA <?= esc($a['zip']) ?></a>
           <?php endforeach; ?>
-          <a href="/service-areas">View all service areas</a>
-          <p class="drop-group">Resources</p>
-          <a href="<?= esc($COST_GUIDE['slug']) ?>">Water Damage Restoration Cost</a>
-          <a href="<?= esc($STORM_GUIDE['slug']) ?>">Belle Air Storm Flood Checklist</a>
+          <a href="/about">About Us</a>
+          <a href="/contact">Contact Us</a>
           <a class="btn btn-gold" href="<?= esc($SITE['phone_href']) ?>"><?= esc($SITE['phone']) ?></a>
         </div>
       </details>

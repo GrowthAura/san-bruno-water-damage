@@ -102,7 +102,6 @@ require $ROOT . '/includes/header.php';
     <p class="hero-intro">The page you asked for is not here.</p>
     <div class="hero-ctas">
       <a class="btn btn-gold" href="<?= esc($SITE['phone_href']) ?>"><?= esc($SITE['phone']) ?></a>
-      <a class="btn btn-ivory" href="/">Back to home</a>
     </div>
   </div>
 </section>
@@ -413,8 +412,7 @@ function render_page($slug, $page, $form = null) {
     <?php require $ROOT . '/includes/lead-form.php'; ?>
   </div>
   <?php endif; ?>
-  <p class="back-home"><a href="/">Back to home</a></p>
-</div></section>
+
 <?= call_strip() ?>
 <?= final_cta_compact($formTarget) ?>
 <?php
