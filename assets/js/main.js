@@ -70,6 +70,37 @@
     syncExpanded();
   });
 
+  // Mobile scrollers (Batch 1): horizontal snap rows for the homepage
+  // service cards + nearby-cities area cards. Arrows scroll one card at a
+  // time and disable at the ends; the row stays swipeable by touch.
+  document.querySelectorAll('.scroller-wrap').forEach(function (wrap) {
+    var row = wrap.querySelector('.scroller');
+    if (!row) return;
+    var prev = wrap.querySelector('.scroll-prev');
+    var next = wrap.querySelector('.scroll-next');
+    function cardStep() {
+      var card = row.querySelector('.card, .area-card');
+      var gap = parseFloat(window.getComputedStyle(row).gap) || 18;
+      return card ? card.getBoundingClientRect().width + gap : 300;
+    }
+    function syncArrows() {
+      if (!prev || !next) return;
+      var max = row.scrollWidth - row.clientWidth;
+      prev.disabled = row.scrollLeft <= 1;
+      next.disabled = row.scrollLeft >= max - 1;
+    }
+    if (prev) prev.addEventListener('click', function () {
+      row.scrollBy({ left: -cardStep(), behavior: 'smooth' });
+    });
+    if (next) next.addEventListener('click', function () {
+      row.scrollBy({ left: cardStep(), behavior: 'smooth' });
+    });
+    row.addEventListener('scroll', syncArrows, { passive: true });
+    window.addEventListener('resize', syncArrows);
+    wrap.classList.add('scroller-ready');
+    syncArrows();
+  });
+
   // Mobile call bar: hidden at first paint so it can never cover the hero
   // buttons; it slides in once the user has scrolled a little.
   var docEl = document.documentElement;

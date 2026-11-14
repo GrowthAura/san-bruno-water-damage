@@ -25,7 +25,7 @@ $map_src = 'https://www.google.com/maps?q=' . rawurlencode($SITE['map_query']) .
     <div class="footer-col">
       <p class="footer-h">Services</p>
       <ul>
-        <?php foreach ($SERVICES as $s): ?>
+        <?php foreach (core_services() as $s): ?>
         <li><a href="<?= esc($s['slug']) ?>"><?= esc($s['nav']) ?></a></li>
         <?php endforeach; ?>
       </ul>
@@ -60,6 +60,6 @@ $map_src = 'https://www.google.com/maps?q=' . rawurlencode($SITE['map_query']) .
   <span aria-hidden="true">&#9742;</span><span><?= esc($SITE['phone']) ?></span>
 </a>
 <div class="mobile-call-spacer" aria-hidden="true"></div>
-<script src="/assets/js/main.js?v=3" defer></script>
+<script src="/assets/js/main.js?v=4" defer></script>
 </body>
 </html>

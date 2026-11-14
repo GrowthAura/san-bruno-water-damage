@@ -119,6 +119,12 @@ function render_blocks($blocks, $currentSlug = null) {
             $out .= '</div>';
             $faqOpen = false;
         }
+        if (isset($b['img'])) {
+            // Body-image block (Batch 1 item 10): never inside the FAQ list
+            // (closed above); renders '' when the page has no entry yet.
+            $out .= body_img_tag($currentSlug, $b['img']);
+            continue;
+        }
         if (isset($b['h2'])) {
             $out .= '<h2>' . esc($b['h2']) . '</h2>';
         } elseif (isset($b['h3'])) {
@@ -163,6 +169,64 @@ function bullets_html($items) {
         $out .= '<li>' . esc($it) . '</li>';
     }
     return $out . '</ul>';
+}
+
+// ---- Core services: the SAME 7-8 services in header + footer menus -------
+// Batch 1 (2026-11-13, user order): header Services dropdown and footer
+// Services column list the identical set, same order, same targets — the
+// 8 most central services from the doc's own service list (all have pages).
+// $SERVICES itself is untouched (homepage cards + schema still use all 14).
+function core_services() {
+    global $SERVICES;
+    $core = ['/emergency-water-extraction', '/structural-drying',
+             '/burst-pipe-water-damage', '/sewage-backup-cleanup',
+             '/storm-flood-water-damage', '/roof-leak-ceiling-water-damage',
+             '/water-heater-appliance-leak', '/mold-remediation'];
+    $out = [];
+    foreach ($SERVICES as $s) {
+        if (in_array($s['slug'], $core, true)) $out[] = $s;
+    }
+    return $out;
+}
+
+// ---- Service-page body image (Batch 1, item 10-template) -----------------
+// Structure (defined here; entries live in data/media.php, added by the
+// sourcing child — this file never invents one):
+//   $PAGE_IMG[<service-slug>]['body-1'] = ['file' => '...jpg',
+//       'alt' => '...', 'caption' => '... (optional)'];
+// Exactly ONE body slot per service page: hero + body-1 = 2 images total.
+// Width/height attrs come from the real file dims (img_tag, same as heroes).
+// No entry => '' : the page renders exactly as before (no empty box).
+function body_img_tag($slug, $key = 'body-1') {
+    global $PAGE_IMG;
+    $img = page_img($slug, $key);
+    if (!$img) return '';
+    $caption = $PAGE_IMG[$slug][$key]['caption'] ?? null;
+    $html = '<figure class="body-figure">' . img_tag($img, 1200, 675);
+    if ($caption !== null && $caption !== '') {
+        $html .= '<figcaption>' . esc($caption) . '</figcaption>';
+    }
+    return $html . '</figure>';
+}
+
+// Splice the single body-image block into a page's block stream at the end
+// of its FIRST h2 section (just before the 2nd h2) — a logical section
+// boundary, never mid-paragraph, never inside the FAQ run. Returns the
+// blocks unchanged when the page has no body-1 entry or fewer than 2 h2s
+// before the FAQ block.
+function blocks_with_body_img($blocks, $slug, $key = 'body-1') {
+    if (!page_img($slug, $key)) return $blocks;
+    $faqAt = null;
+    $h2At = [];
+    foreach ($blocks as $i => $b) {
+        if (isset($b['faq'])) { $faqAt = $i; break; }
+        if (isset($b['h2'])) $h2At[] = $i;
+    }
+    if (count($h2At) < 2) return $blocks;
+    $at = $h2At[1];
+    if ($faqAt !== null && $at > $faqAt) return $blocks;
+    array_splice($blocks, $at, 0, [['img' => $key]]);
+    return $blocks;
 }
 
 // ---- Page map: every route the site serves -------------------------------

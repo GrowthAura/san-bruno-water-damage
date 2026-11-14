@@ -60,7 +60,7 @@ body{
   color:var(--text);
   background:var(--paper);
   line-height:1.8;
-  font-size:18px;
+  font-size:20px;
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
 }
@@ -85,7 +85,7 @@ h1,h2,h3,h4{
   text-wrap:balance;
 }
 h1{font-size:clamp(2.4rem,4.8vw,3.9rem);font-weight:560;letter-spacing:-.02em;text-wrap:balance}
-h2{font-size:clamp(1.85rem,3.2vw,2.6rem);margin-bottom:.55em;font-weight:580;text-wrap:balance;max-width:36ch}
+h2{font-size:clamp(1.85rem,3.2vw,2.6rem);margin-bottom:.55em;font-weight:580;text-wrap:balance;max-width:88ch}
 /* End-level H2: short gold rule under every H2, centred when the H2 is centred. */
 h2::after{
   content:"";display:block;width:56px;height:3px;border-radius:2px;
@@ -211,7 +211,7 @@ li{margin-bottom:.5em}
   background:linear-gradient(100deg,rgba(7,18,35,.90) 0%,rgba(7,18,35,.74) 46%,rgba(7,18,35,.40) 100%);
 }
 .hero-content{position:relative;z-index:2;padding:96px 28px 104px;max-width:var(--maxw);margin:0 auto}
-.hero-content h1{color:#fff;max-width:24ch;margin-bottom:20px}
+.hero-content h1{color:#fff;max-width:40ch;margin-bottom:20px}
 .hero-intro{font-size:1.15rem;line-height:1.7;color:#E6EEF5;max-width:72ch;margin-bottom:30px}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:14px}
 .hero-ctas .btn{min-width:min(300px,100%)}
@@ -308,7 +308,7 @@ li{margin-bottom:.5em}
 
 /* ---------- Areas ---------- */
 .area-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin:26px 0}
-.area-card{border-radius:var(--radius-sm);overflow:hidden;position:relative;aspect-ratio:16/9;background:var(--paper-3)}
+.area-card{display:block;border-radius:var(--radius-sm);overflow:hidden;position:relative;aspect-ratio:16/9;background:var(--paper-3)}
 .area-card img{width:100%;height:100%;object-fit:cover}
 .area-card span{
   position:absolute;left:0;right:0;bottom:0;padding:26px 12px 10px;
@@ -466,7 +466,7 @@ li{margin-bottom:.5em}
   .footer-cols{grid-template-columns:1fr 1fr}
 }
 @media (max-width:640px){
-  body{font-size:18px}
+  body{font-size:20px}
   .container{padding:0 20px}
   .section{padding:52px 0}
   .topbar-inner{padding:8px 20px;font-size:.76rem;justify-content:center}
@@ -508,4 +508,41 @@ li{margin-bottom:.5em}
   .hero-content h1{font-size:1.75rem}
   .hero-intro{margin-bottom:12px}
   .eyebrow{margin-bottom:10px}
+}
+
+/* ---------- Body figure (Batch 1 item 10, 2026-11-13) ---------- */
+/* Single body image per service/area page (body-1). Same 16:9 treatment as
+   .detail-figure; renders only when data/media.php carries the entry. */
+.body-figure{margin:28px 0;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)}
+.body-figure img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.body-figure figcaption{padding:12px 18px;font-size:15px;color:var(--muted);background:#fff}
+
+/* ---------- Mobile scrollers (Batch 1, 2026-11-13) ---------- */
+/* Homepage service-cards row + nearby-cities area-cards row scroll
+   horizontally on mobile only (<=768px); desktop keeps the grid.
+   Arrows show only once JS has wired them (.scroller-ready), so a no-JS
+   page never shows dead controls. Placed LAST: the <=640px rules above set
+   1-column grids, and this flex override must win over them. */
+.scroller-wrap{position:relative}
+.scroll-arrow{display:none}
+@media (max-width:768px){
+  .scroller-wrap .scroller{
+    display:flex;flex-wrap:nowrap;overflow-x:auto;
+    scroll-snap-type:x mandatory;scroll-padding:0 4px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;
+    padding-bottom:6px;
+  }
+  .scroller-wrap .scroller::-webkit-scrollbar{display:none}
+  .scroller-wrap .cards.scroller .card{flex:0 0 min(78%,340px);scroll-snap-align:start}
+  .scroller-wrap .area-strip.scroller .area-card{flex:0 0 min(62%,260px);scroll-snap-align:start}
+  .scroller-wrap.scroller-ready .scroll-arrow{
+    display:flex;position:absolute;top:50%;transform:translateY(-50%);
+    z-index:5;width:40px;height:40px;border-radius:50%;
+    border:1px solid var(--line);background:#fff;color:var(--ink);
+    font-size:26px;line-height:1;align-items:center;justify-content:center;
+    cursor:pointer;box-shadow:var(--shadow-sm);
+  }
+  .scroller-wrap.scroller-ready .scroll-prev{left:-4px}
+  .scroller-wrap.scroller-ready .scroll-next{right:-4px}
+  .scroller-wrap.scroller-ready .scroll-arrow:disabled{opacity:.35;cursor:default}
 }

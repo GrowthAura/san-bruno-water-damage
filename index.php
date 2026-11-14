@@ -192,13 +192,17 @@ function render_home($form = null) {
 <section class="section section-cream"><div class="container content-block">
   <h2><?= esc($SERVICES_H2) ?></h2>
   <p class="lead"><?= esc($SERVICES_INTRO) ?></p>
-  <div class="cards">
+  <div class="scroller-wrap">
+    <button class="scroll-arrow scroll-prev" type="button" aria-label="Scroll services left">&lsaquo;</button>
+    <div class="cards scroller">
     <?php foreach ($SERVICES as $c): $cimg = page_img($c['slug'], 'card'); ?>
     <article class="card">
       <?php if ($cimg): ?><div class="card-media"><?= img_tag($cimg, 1200, 675) ?></div><?php endif; ?>
       <div class="card-body"><h3><?= esc($c['h3']) ?></h3><?= card_para($c, '/') ?></div>
     </article>
     <?php endforeach; ?>
+    </div>
+    <button class="scroll-arrow scroll-next" type="button" aria-label="Scroll services right">&rsaquo;</button>
   </div>
 </div></section>
 <section class="section"><div class="container content-block">
@@ -248,25 +252,25 @@ function render_home($form = null) {
 <section class="section section-cream"><div class="container content-block">
   <h2><?= esc($NEARBY_H2) ?></h2>
   <p><?= esc($NEARBY_INTRO) ?></p>
-  <ul>
-    <?php foreach ($AREAS as $a): ?>
-    <li><?= linkify($a['line'], $a['anchor'], $a['slug'], '/') ?></li>
-    <?php endforeach; ?>
-  </ul>
 </div>
 <div class="container">
   <?php /* Area strip breaks out of the 88ch text column to the full container
          (watchdog Phase 1): 5 cards at 168px each cramped the city labels to
-         3 lines; at full width each card is ~230px and labels fit in 2. */ ?>
-  <div class="area-strip">
+         3 lines; at full width each card is ~230px and labels fit in 2.
+         Batch 1 (2026-11-13, user order): the upper text list of the 5 cities
+         is REMOVED — the cards below carry the same doc links now (one link
+         per target per page, on the card itself). */ ?>
+  <div class="scroller-wrap">
+    <button class="scroll-arrow scroll-prev" type="button" aria-label="Scroll nearby cities left">&lsaquo;</button>
+    <div class="area-strip scroller">
     <?php foreach ($AREAS as $a): $aimg = page_img($a['slug'], 'card'); ?>
-    <?php /* No link on the card: the nearby-areas list above already links
-           each city once (doc link); one link per target per page. */ ?>
-    <div class="area-card">
+    <a class="area-card" href="<?= esc($a['slug']) ?>">
       <?= img_tag($aimg, 1200, 675) ?>
       <span><?= esc($a['city']) ?>, CA <?= esc($a['zip']) ?></span>
-    </div>
+    </a>
     <?php endforeach; ?>
+    </div>
+    <button class="scroll-arrow scroll-next" type="button" aria-label="Scroll nearby cities right">&rsaquo;</button>
   </div>
 </div></section>
 <section class="section"><div class="container content-block">
@@ -393,6 +397,12 @@ function render_page($slug, $page, $form = null) {
 <section class="section"><div class="container content-block">
   <?= crumbs_html($crumbs) ?>
   <?php $blocks = $page['content']['blocks'];
+        // Batch 1 item 10: service + area pages carry exactly one body
+        // image (body-1) at the end of the first h2 section. No entry in
+        // data/media.php yet => blocks unchanged, page renders as before.
+        if (in_array($page['type'], ['service', 'area'], true)) {
+            $blocks = blocks_with_body_img($blocks, $slug);
+        }
         echo render_blocks(array_slice($blocks, 0, 1), $slug); ?>
   <?php $detail = page_img($slug, 'detail'); if ($detail): ?>
   <figure class="detail-figure"><?= img_tag($detail, 1200, 675) ?></figure>

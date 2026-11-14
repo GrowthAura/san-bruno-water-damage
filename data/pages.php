@@ -37,7 +37,6 @@ $TRUST = [
     '24/7 Phone Line',
     'Serving San Bruno 94066 & the North Peninsula',
     'Homes, Condos & Businesses',
-    'Photo & Moisture Records for Your Claim',
 ];
 
 $FIRST_STEPS = [

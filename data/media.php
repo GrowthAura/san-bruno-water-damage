@@ -1,18 +1,24 @@
 <?php
 // San Bruno Water Damage — image map (2026-11-11).
-// ALL images are fresh for this site: real photographs from Pexels,
-// re-encoded with PIL (16:9, metadata stripped), verified with qa/IMAGE-LOG.md.
+// ALL images are fresh for this site: real photographs from Pexels /
+// Wikimedia Commons, re-encoded with PIL (16:9, metadata stripped),
+// verified with qa/IMAGE-LOG.md.
 // Alt text is place + topic (accessibility metadata describing the image);
 // no on-site claim that any image is a real job photo.
-// Structure: $PAGE_IMG[slug]['card'|'hero'] = ['file'=>..., 'alt'=>...]
+// Structure: $PAGE_IMG[slug]['card'|'hero'|'body-1'] = ['file'=>..., 'alt'=>...]
 // Process steps: $PAGE_IMG['process-1'..'process-7']['img'].
-// FLAGGED (no photo on Pexels, entry omitted on purpose — page_img() returns
-// null, so no image slot renders there): /structural-drying,
-// /garage-in-law-unit-flooding, /hardwood-floor-water-damage, process-5,
-// /crawl-space-water-damage, /emergency-water-extraction,
-// /water-heater-appliance-leak. See qa/IMAGE-LOG.md for the reasons; supply a
-// real job photo to fill them. (Round 3, 2026-11-12: crawl-space, extraction
-// and water-heater joined the flagged list — see IMAGE-LOG Round 3 appendix.)
+// Body images: exactly ONE 'body-1' per service page (hero + body-1 = 2
+// images total). Captions are NOT wired (a <figcaption> would add visible
+// words outside the doc-verbatim baseline); alt text carries the
+// description. See qa/FINDINGS-BATCH1-SERVICE-BODY-2026-11-13.md.
+// FLAGGED (no good photo found, entry omitted on purpose — page_img()
+// returns null, so no image slot renders there): /structural-drying hero,
+// /garage-in-law-unit-flooding (filled Batch 1), /hardwood-floor-water-damage,
+// process-5 (filled Batch 1), /crawl-space-water-damage,
+// /emergency-water-extraction, /water-heater-appliance-leak. See
+// qa/IMAGE-LOG.md for the reasons; supply a real job photo to fill them.
+// (Round 3, 2026-11-12: crawl-space, extraction and water-heater joined
+// the flagged list — see IMAGE-LOG Round 3 appendix.)
 // CYCLE 1, 2026-11-13 — 7 more slots emptied on verified evidence, see
 // qa/FINDINGS-OPT-IMAGES-2026-11-13.md: / (home hero, Pexels 6195275 — live
 // on Owasso x3), /burst-pipe-water-damage (32588548 — legible Cyrillic
@@ -33,17 +39,62 @@
 // viewed identical) and process-3 (7641000 — SAME PHOTO as Cape Coral's live
 // /images/img-vacuum.jpg, a8=3, viewed identical; Cape Coral's file is
 // a8=0/a16=1 vs the Pexels 7641000 CDN original).
-// 19 honestly-empty slots total. Never force a wrong or reused photo.
+// BATCH 1 FIX LOOP 2, 2026-11-14 (after final verifier P1-1..P1-4, qa/FINDINGS-BATCH1-REPLACEMENTS2-2026-11-14.md):
+// 4 cross-site reuses (heavy 16:9 crops evading hash bands): mold body =
+// Delaware Wilmington mold hero + Tulsa mold wall (a8 0/a16 1/MAD 0.18,
+// pixel-identical); roof body = High Desert ceiling-tiles + Tulsa stain;
+// structural card = Delaware + Tulsa air-movers; mold-2 card = Tulsa ceiling
+// growth + Texas Fate. Replacements wired: mold body-v2 (Flickr black mold by
+// window, CC BY-SA 2.0, 1.42x upscale), roof body-v2 (Flickr rotted ceiling
+// with daylight through the hole, CC BY 2.0, 1.59x upscale, sharp at slot
+// size), structural v3 (Flickr Dri-Eaz LGR 2800i dehumidifier, CC BY-SA 2.0 —
+// model labels legible on the unit, incidental to the equipment), mold card-v2
+// (Flickr bathroom mold above tiles, CC BY 2.0). 3 picks killed by nets
+// (Delaware mold-wall, Delaware XPOWER, Texas dehumidifier). CC ATTRIBUTION
+// stays 16 (4 removed all required it, 4 new all require it). No credit
+// mechanism — open decision (his call).
+// BATCH 1, 2026-11-13/14 (wiring, qa/FINDINGS-BATCH-IMAGES-2026-11-13.md):
+// 8 heroes filled (burst-pipe, condo, garage, millbrae, cost, belle-air,
+// roof-v2, commercial-v2 — fresh-disk nets CLEAR, see each child's
+// findings), 5 process steps filled (2,3,5,6,7), 5 area photos replaced
+// (wrong-city SF/Sausalito files deleted), 5 service cards + 5 body-1
+// filled. Honestly empty after Batch 1: 9 hero slots (home, slab-leak,
+// mold, structural-drying, hardwood, crawl-space, water-heater,
+// emergency, sewage — sewage's old sink-scrub file deleted, no replacement
+// exists), 5 card slots (burst-pipe, crawl-space, slab-leak, condo,
+// hardwood) + emergency card (US Navy sailors photo REJECTED by the
+// coordinator at wiring — military framing, not a local crew). Garage
+// hero + card + body-1 are the SAME photo (Commons Miami garage flood,
+// place-neutral) — the 343x193 card was re-created by the coordinator
+// from the hero after the hero write overwrote the card file. Millbrae
+// uses D's station photo (legible "GATEWAY @ MILLBRAE STATION"); B's
+// hazy panorama (millbrae-ca-v2) is unused, kept in the backup dir.
+// BATCH 1 FIX LOOP, 2026-11-14 (after Audits A + B, qa/FINDINGS-BATCH1-REPLACEMENTS-2026-11-14.md):
+// Audit B rejected 4 heroes (commercial v2 = twice-rejected Slippery's sign;
+// roof v2 = no leak cue; condo v2 = pristine tower, no damage cue; burst v2 =
+// dripping garden tap) + process-3 (outdoor street pump) + water-heater card
+// (Rheem brand ad) + garage body-1 (same photo as hero, MAD 0.16). Replacements
+// wired: commercial v3 (flooded clothing shop, CC BY 2.5), roof v3 (collapsed
+// bedroom ceiling from a roof leak, USDA public domain), condo v3 (silt-covered
+// flooded kitchen, CC BY 2.0 — a house kitchen, not a condo unit; the damage cue
+// is what the audit demanded and no condo-vs-house cue is visible in frame),
+// garage body-v2 (night garage, Fiat 500 + Mini — a DIFFERENT photo from the
+// same Miami series as the hero, a16 116 / MAD 46.12 vs hero), process-3 v2
+// (indoor extraction, vacuum wand + red hose, CC BY-SA 4.0 — 600x450 source
+// upscaled 1.17x to 704x396, clean at slot size), water-heater v2 (blue tank +
+// leak puddle, CC BY 2.0, no dominant logo). Burst-pipe hero stays HONESTLY
+// EMPTY (no true burst-spray photo found; every candidate banned/live/wrong).
+// CC ATTRIBUTION now 16 wired images (was 13): + commercial v3, condo v3,
+// process-3 v2. Still no credit mechanism — open decision (his call).
+// CC ATTRIBUTION OPEN (parent's call): Millbrae station CC BY 4.0, South
+// San Francisco city hall CC BY-SA 3.0, Brisbane Visitacion CC BY-SA 4.0
+// require attribution; the site has no photo-credit mechanism. Sources
+// recorded in qa/manifest-millbrae.json. Never force a wrong or reused
+// photo.
 
 $IMG = '/assets/img/';
 
 $PAGE_IMG = [
-    '/sewage-backup-cleanup' => [
-        'card'   => ['file' => 'sewage-backup-cleanup-san-bruno.jpg',
-            'alt' => 'Sewage Backup Cleanup in San Bruno'],
-        'hero'   => ['file' => 'sewage-backup-cleanup-san-bruno.jpg',
-            'alt' => 'Worker in gloves cleaning a bathroom sink in San Bruno, CA'],
-    ],
     '/storm-flood-water-damage' => [
         'card'   => ['file' => 'storm-flood-water-damage-san-bruno.jpg',
             'alt' => 'Storm Flood Water Damage in San Bruno'],
@@ -51,49 +102,107 @@ $PAGE_IMG = [
             'alt' => 'Flooded road with a Road Closed Ahead sign after a storm near San Bruno, CA'],
     ],
     '/roof-leak-ceiling-water-damage' => [
-        'card'   => ['file' => 'roof-leak-ceiling-water-damage-san-bruno.jpg',
+        'card'   => ['file' => 'roof-leak-ceiling-water-damage-v3-san-bruno.jpg',
             'alt' => 'Roof Leak and Ceiling Water Damage in San Bruno'],
-        'hero'   => ['file' => 'roof-leak-ceiling-water-damage-san-bruno.jpg',
-            'alt' => 'Roofer laying asphalt shingles on a rooftop in San Bruno, CA'],
+        'hero'   => ['file' => 'roof-leak-ceiling-water-damage-v3-san-bruno.jpg',
+            'alt' => 'Bedroom ceiling collapsed from a roof leak, with torn plaster and exposed wood above a dresser in San Bruno, CA'],
+        'body-1' => ['file' => 'roof-leak-ceiling-water-damage-body-v2-san-bruno.jpg',
+            'alt' => 'Ceiling rotted through by a roof leak, with exposed joists and daylight showing through the hole in San Bruno, CA'],
     ],
     '/commercial-water-damage' => [
-        'card'   => ['file' => 'commercial-water-damage-san-bruno.jpg',
+        'card'   => ['file' => 'commercial-water-damage-v3-san-bruno.jpg',
             'alt' => 'Commercial Water Damage in San Bruno'],
-        'hero'   => ['file' => 'commercial-water-damage-san-bruno.jpg',
-            'alt' => 'Empty modern office space in San Bruno, CA'],
+        'hero'   => ['file' => 'commercial-water-damage-v3-san-bruno.jpg',
+            'alt' => 'Flood-damaged clothing shop interior with mud-stained clothes on racks above a wet tiled floor in San Bruno, CA'],
+    ],
+    '/condo-water-damage' => [
+        'hero'   => ['file' => 'condo-water-damage-v3-san-bruno.jpg',
+            'alt' => 'Kitchen interior wrecked by floodwater, with silt-covered counters and cabinets hanging open in San Bruno, CA'],
+        'body-1' => ['file' => 'condo-water-damage-body-san-bruno.jpg',
+            'alt' => 'Resident mopping water from the floor inside an apartment doorway'],
+    ],
+    '/garage-in-law-unit-flooding' => [
+        'card'   => ['file' => 'garage-in-law-unit-flooding-card-san-bruno.jpg',
+            'alt' => 'Flooded Garage and In-Law Unit Cleanup in San Bruno'],
+        'hero'   => ['file' => 'garage-in-law-unit-flooding-san-bruno.jpg',
+            'alt' => 'Car standing in floodwater inside a parking garage in San Bruno, CA'],
+        'body-1' => ['file' => 'garage-in-law-unit-flooding-body-v2-san-bruno.jpg',
+            'alt' => 'Cars standing in floodwater inside a parking garage at night in San Bruno, CA'],
+    ],
+    '/structural-drying' => [
+        'card'   => ['file' => 'structural-drying-v3-san-bruno.jpg',
+            'alt' => 'Commercial dehumidifier drying a room in San Bruno, CA'],
+    ],
+    '/water-heater-appliance-leak' => [
+        'card'   => ['file' => 'water-heater-appliance-leak-v2-san-bruno.jpg',
+            'alt' => 'Water heater tank with a puddle of leaking water on the floor at its base in San Bruno, CA'],
+    ],
+    '/mold-remediation' => [
+        'card'   => ['file' => 'mold-remediation-card-v2-san-bruno.jpg',
+            'alt' => 'Mold growth on a bathroom wall above white tiles in San Bruno, CA'],
+        'body-1' => ['file' => 'mold-remediation-body-v2-san-bruno.jpg',
+            'alt' => 'Black mold growth on a wall beside a window in San Bruno, CA'],
+    ],
+    '/slab-leak-hidden-leak-water-damage' => [
+        'body-1' => ['file' => 'slab-leak-hidden-leak-water-damage-body-san-bruno.jpg',
+            'alt' => 'Moisture meter and leak-detection tools on a wood floor'],
     ],
     '/service-areas' => [
         'hero'   => ['file' => 'service-areas-san-bruno.jpg',
             'alt' => 'Hillside homes above the San Francisco Bay near San Bruno, CA'],
     ],
+    '/millbrae-ca' => [
+        'card'   => ['file' => 'millbrae-ca-station-san-bruno.jpg',
+            'alt' => 'Water damage restoration in Millbrae, CA'],
+        'hero'   => ['file' => 'millbrae-ca-station-san-bruno.jpg',
+            'alt' => 'Millbrae Station in Millbrae, CA'],
+    ],
     '/south-san-francisco-ca' => [
-        'card'   => ['file' => 'south-san-francisco-ca-san-bruno.jpg',
+        'card'   => ['file' => 'south-san-francisco-ca-city-hall-san-bruno.jpg',
             'alt' => 'Water damage restoration in South San Francisco, CA'],
-        'hero'   => ['file' => 'south-san-francisco-ca-san-bruno.jpg',
-            'alt' => 'Residential street in South San Francisco, CA'],
+        'hero'   => ['file' => 'south-san-francisco-ca-city-hall-san-bruno.jpg',
+            'alt' => 'South San Francisco Municipal Building in South San Francisco, CA'],
     ],
     '/pacifica-ca' => [
-        'card'   => ['file' => 'pacifica-ca-san-bruno.jpg',
+        'card'   => ['file' => 'pacifica-ca-pier-san-bruno.jpg',
             'alt' => 'Water damage restoration in Pacifica, CA'],
-        'hero'   => ['file' => 'pacifica-ca-san-bruno.jpg',
-            'alt' => 'Coastal hillside homes above the ocean in Pacifica, CA'],
+        'hero'   => ['file' => 'pacifica-ca-pier-san-bruno.jpg',
+            'alt' => 'Pacifica Municipal Pier at sunset in Pacifica, CA'],
     ],
     '/burlingame-ca' => [
-        'card'   => ['file' => 'burlingame-ca-san-bruno.jpg',
+        'card'   => ['file' => 'burlingame-ca-avenue-san-bruno.jpg',
             'alt' => 'Water damage restoration in Burlingame, CA'],
-        'hero'   => ['file' => 'burlingame-ca-san-bruno.jpg',
-            'alt' => 'Tree-lined street with Victorian homes in Burlingame, CA'],
+        'hero'   => ['file' => 'burlingame-ca-avenue-san-bruno.jpg',
+            'alt' => 'Downtown Burlingame Avenue in Burlingame, CA'],
     ],
     '/brisbane-ca' => [
-        'card'   => ['file' => 'brisbane-ca-san-bruno.jpg',
+        'card'   => ['file' => 'brisbane-ca-visitacion-san-bruno.jpg',
             'alt' => 'Water damage restoration in Brisbane, CA'],
-        'hero'   => ['file' => 'brisbane-ca-san-bruno.jpg',
-            'alt' => 'Hillside homes in Brisbane, CA'],
+        'hero'   => ['file' => 'brisbane-ca-visitacion-san-bruno.jpg',
+            'alt' => 'Visitacion Avenue with San Bruno Mountain in Brisbane, CA'],
+    ],
+    '/resources/water-damage-restoration-cost-san-bruno' => [
+        'hero'   => ['file' => 'water-damage-cost-san-bruno.jpg',
+            'alt' => 'Floor plan with a tape measure and pen for a water damage repair estimate in San Bruno, CA'],
+    ],
+    '/resources/belle-air-storm-flood-checklist' => [
+        'hero'   => ['file' => 'belle-air-checklist-san-bruno.jpg',
+            'alt' => 'Sandbags and plastic sheeting along a road for flood protection in San Bruno, CA'],
     ],
     'process-1' => ['img' => ['file' => 'process-1-call-dispatch-san-bruno.jpg',
         'alt' => 'Emergency call and crew dispatch in San Bruno, CA']],
+    'process-2' => ['img' => ['file' => 'process-2-wood-moisture-meter-san-bruno.jpg',
+        'alt' => 'Technician checking wood moisture with a meter in San Bruno, CA']],
+    'process-3' => ['img' => ['file' => 'process-3-water-extraction-v2-san-bruno.jpg',
+        'alt' => 'Water extraction in progress indoors, with a vacuum wand and red hose on a wet concrete floor in San Bruno, CA']],
     'process-4' => ['img' => ['file' => 'process-4-removal-san-bruno.jpg',
         'alt' => 'Empty room with peeling walls and debris being stripped out in San Bruno, CA']],
+    'process-5' => ['img' => ['file' => 'process-5-drying-equipment-san-bruno.jpg',
+        'alt' => 'Dehumidifier and air mover drying a wood floor in San Bruno, CA']],
+    'process-6' => ['img' => ['file' => 'process-6-sanitizing-clean-san-bruno.jpg',
+        'alt' => 'Gloved hands sanitizing and cleaning a surface in San Bruno, CA']],
+    'process-7' => ['img' => ['file' => 'process-7-drywall-repair-san-bruno.jpg',
+        'alt' => 'Ceiling drywall repairs and rebuild in San Bruno, CA']],
 ];
 
 function page_img($slug, $kind) {
@@ -104,8 +213,8 @@ function page_img($slug, $kind) {
 }
 
 // CYCLE 3, 2026-11-13 — social-sharing fallback (qa/FINDINGS-OPT-SEO-2026-11-13.md
-// P2-1): 19/28 pages have no own hero (7 flagged empty + 12 emptied on verified
-// reuse/relevance evidence), so og:image/twitter:image would be absent on them.
+// P2-1): 14/28 pages have no own hero (9 honestly-empty hero slots + About,
+// Contact and 3 blogs), so og:image/twitter:image would be absent on them.
 // Fallback is a surviving, net-clean, on-service San Bruno photo (the storm-flood
 // hero — kept PASS, full-size verified). Used ONLY for og:image/twitter:image;
 // page heroes and schema images stay honest (null when a page has no hero).
@@ -115,10 +224,10 @@ function og_fallback_img() {
 
 function img_tag($img, $w, $h, $loading = 'lazy') {
     if (!$img) return '';
-    // Real file dimensions (same fix as hero_img_tag): several card/process
-    // files are 1600x900 while callers passed 1200x675. Same 16:9 either way,
-    // so no layout change — the attributes now state the file correctly.
-    // Passed $w/$h remain only as the fallback if the file cannot be read.
+    // Real file dimensions (Batch 1, 2026-11-13: files are 1280x720 heroes,
+    // 343x193 cards, 704x396 process, 1088x612 body — the old 1600x900 /
+    // 1200x675 claims in these comments were stale). Passed $w/$h remain
+    // only as the fallback if the file cannot be read.
     if (!empty($img['file'])) {
         $size = @getimagesize(__DIR__ . '/../assets/img/' . $img['file']);
         if ($size) { $w = (int) $size[0]; $h = (int) $size[1]; }
@@ -128,10 +237,9 @@ function img_tag($img, $w, $h, $loading = 'lazy') {
 }
 
 function hero_img_tag($img) {
-    // Hero <img> with the file's REAL pixel dimensions. Nine hero files are
-    // 1200x675 while the template used to hard-code 1600x900 (same 16:9, so
-    // no CLS effect — but the attributes misstated the file). Falls back to
-    // 1600x900 if the file cannot be read.
+    // Hero <img> with the file's REAL pixel dimensions. Heroes are 1280x720
+    // (Batch 1); the old 1600x900 hard-code misstated the file (same 16:9,
+    // so no CLS effect). Falls back to 1600x900 if the file cannot be read.
     if (!$img) return '';
     $w = 1600; $h = 900;
     if (!empty($img['file'])) {

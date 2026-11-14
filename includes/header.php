@@ -33,7 +33,7 @@ global $SITE, $SERVICES, $AREAS, $COST_GUIDE, $STORM_GUIDE;
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
 <link rel="preload" href="/assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/styles.css?v=8">
+<link rel="stylesheet" href="/assets/css/styles.css?v=9">
 <?= $HEAD['ld'] ?? '' ?>
 </head>
 <body>
@@ -55,7 +55,7 @@ global $SITE, $SERVICES, $AREAS, $COST_GUIDE, $STORM_GUIDE;
         <summary>Services</summary>
         <div class="nav-drop">
           <p class="drop-group">Water Damage Services</p>
-          <?php foreach ($SERVICES as $s): ?>
+          <?php foreach (core_services() as $s): ?>
           <a href="<?= esc($s['slug']) ?>"><?= esc($s['nav']) ?></a>
           <?php endforeach; ?>
         </div>
@@ -87,7 +87,7 @@ global $SITE, $SERVICES, $AREAS, $COST_GUIDE, $STORM_GUIDE;
         <div class="mobile-menu">
           <a href="/">Home</a>
           <p class="drop-group">Water Damage Services</p>
-          <?php foreach ($SERVICES as $s): ?>
+          <?php foreach (core_services() as $s): ?>
           <a href="<?= esc($s['slug']) ?>"><?= esc($s['nav']) ?></a>
           <?php endforeach; ?>
           <p class="drop-group">Service Areas</p>
