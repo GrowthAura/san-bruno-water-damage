@@ -86,6 +86,21 @@
 // EMPTY (no true burst-spray photo found; every candidate banned/live/wrong).
 // CC ATTRIBUTION now 16 wired images (was 13): + commercial v3, condo v3,
 // process-3 v2. Still no credit mechanism — open decision (his call).
+// DELIGHT ROUND, 2026-11-14 (user's live-review complaints after the 14:36
+// push: no hero image, no photos on the service cards, favicon ugly; +
+// Pass 5 P1-3 mobile scroller arrows). Wired: '/' hero (USGS public domain
+// house in floodwater — first pick USFWS interior was KILLED, live on 3
+// sites); 7 cards (emergency, burst-pipe, sewage, crawl-space, slab-leak,
+// condo, hardwood — all viewed full-size by the coordinator, 13/13 distinct
+// md5s, 0 aHash flags new-vs-new and new-vs-wired); 5 page heroes (burst,
+// structural, crawl, water-heater, hardwood). Burst hero/cards collision
+// caught: hero child's first pick (zerok 2389209453) was the card round's
+// burst card — hero file removed, Rainbow 51749248749 installed instead.
+// Honestly empty still: emergency hero (PunkToad pick rejected: soft 1.67x
+// upscale, murky, no extraction cue), sewage hero (exhaustive search: only
+// Bissell-branded close-ups), slab-leak + mold heroes. CC ATTRIBUTION now
+// 27 (was 16: +6 cards, +5 page heroes; homepage hero is public domain).
+// Favicon redesigned in this round too (Design A: navy + gold serif S).
 // CC ATTRIBUTION OPEN (parent's call): Millbrae station CC BY 4.0, South
 // San Francisco city hall CC BY-SA 3.0, Brisbane Visitacion CC BY-SA 4.0
 // require attribution; the site has no photo-credit mechanism. Sources
@@ -95,6 +110,36 @@
 $IMG = '/assets/img/';
 
 $PAGE_IMG = [
+    '/' => [
+        'hero'   => ['file' => 'water-damage-restoration-hero-san-bruno.jpg',
+            'alt' => 'House standing in floodwater after a storm in San Bruno, CA'],
+    ],
+    '/emergency-water-extraction' => [
+        'card'   => ['file' => 'emergency-water-extraction-card-san-bruno.jpg',
+            'alt' => 'Flooded basement with standing water in San Bruno, CA'],
+    ],
+    '/burst-pipe-water-damage' => [
+        'card'   => ['file' => 'burst-pipe-water-damage-card-san-bruno.jpg',
+            'alt' => 'Water spraying from a burst pipe joint in San Bruno, CA'],
+        'hero'   => ['file' => 'burst-pipe-water-damage-san-bruno.jpg',
+            'alt' => 'Water bursting from a broken pipe joint in San Bruno, CA'],
+    ],
+    '/sewage-backup-cleanup' => [
+        'card'   => ['file' => 'sewage-backup-cleanup-card-san-bruno.jpg',
+            'alt' => 'Cleanup worker in protective gear hosing a flooded floor in San Bruno, CA'],
+    ],
+    '/crawl-space-water-damage' => [
+        'card'   => ['file' => 'crawl-space-water-damage-card-san-bruno.jpg',
+            'alt' => 'Standing water pooled on plastic sheeting in a crawl space in San Bruno, CA'],
+        'hero'   => ['file' => 'crawl-space-water-damage-san-bruno.jpg',
+            'alt' => 'Standing water in a crawl space in San Bruno, CA'],
+    ],
+    '/hardwood-floor-water-damage' => [
+        'card'   => ['file' => 'hardwood-floor-water-damage-card-san-bruno.jpg',
+            'alt' => 'Water-damaged hardwood floor with a lifted board in San Bruno, CA'],
+        'hero'   => ['file' => 'hardwood-floor-water-damage-san-bruno.jpg',
+            'alt' => 'Buckled hardwood floor from water damage in San Bruno, CA'],
+    ],
     '/storm-flood-water-damage' => [
         'card'   => ['file' => 'storm-flood-water-damage-san-bruno.jpg',
             'alt' => 'Storm Flood Water Damage in San Bruno'],
@@ -116,6 +161,8 @@ $PAGE_IMG = [
             'alt' => 'Flood-damaged clothing shop interior with mud-stained clothes on racks above a wet tiled floor in San Bruno, CA'],
     ],
     '/condo-water-damage' => [
+        'card'   => ['file' => 'condo-water-damage-card-san-bruno.jpg',
+            'alt' => 'Living room wrecked by floodwater, with silt-covered furniture in San Bruno, CA'],
         'hero'   => ['file' => 'condo-water-damage-v3-san-bruno.jpg',
             'alt' => 'Kitchen interior wrecked by floodwater, with silt-covered counters and cabinets hanging open in San Bruno, CA'],
         'body-1' => ['file' => 'condo-water-damage-body-san-bruno.jpg',
@@ -132,10 +179,14 @@ $PAGE_IMG = [
     '/structural-drying' => [
         'card'   => ['file' => 'structural-drying-v3-san-bruno.jpg',
             'alt' => 'Commercial dehumidifier drying a room in San Bruno, CA'],
+        'hero'   => ['file' => 'structural-drying-san-bruno.jpg',
+            'alt' => 'Structural drying equipment in a San Bruno, CA home'],
     ],
     '/water-heater-appliance-leak' => [
         'card'   => ['file' => 'water-heater-appliance-leak-v2-san-bruno.jpg',
             'alt' => 'Water heater tank with a puddle of leaking water on the floor at its base in San Bruno, CA'],
+        'hero'   => ['file' => 'water-heater-appliance-leak-san-bruno.jpg',
+            'alt' => 'Leaking water heater in a San Bruno, CA basement'],
     ],
     '/mold-remediation' => [
         'card'   => ['file' => 'mold-remediation-card-v2-san-bruno.jpg',
@@ -144,6 +195,8 @@ $PAGE_IMG = [
             'alt' => 'Black mold growth on a wall beside a window in San Bruno, CA'],
     ],
     '/slab-leak-hidden-leak-water-damage' => [
+        'card'   => ['file' => 'slab-leak-hidden-leak-water-damage-card-san-bruno.jpg',
+            'alt' => 'Water across a wood floor from a hidden leak in San Bruno, CA'],
         'body-1' => ['file' => 'slab-leak-hidden-leak-water-damage-body-san-bruno.jpg',
             'alt' => 'Moisture meter and leak-detection tools on a wood floor'],
     ],
