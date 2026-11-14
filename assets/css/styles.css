@@ -535,14 +535,21 @@ li{margin-bottom:.5em}
   .scroller-wrap .scroller::-webkit-scrollbar{display:none}
   .scroller-wrap .cards.scroller .card{flex:0 0 min(78%,340px);scroll-snap-align:start}
   .scroller-wrap .area-strip.scroller .area-card{flex:0 0 min(62%,260px);scroll-snap-align:start}
+  /* DELIGHT ROUND 2026-11-14 (Pass 5 P1-3): arrows sat ON the cards at 390px
+     (left:-4px/right:-4px at top:50% covered card copy and headings). Arrows
+     now live in a control row BELOW the track — they can never cover card
+     text at any scroll position. The wrap carries the room for the row, but
+     only once JS has wired the arrows (.scroller-ready), so a no-JS page
+     gets no extra gap. */
+  .scroller-wrap.scroller-ready{margin-bottom:56px}
   .scroller-wrap.scroller-ready .scroll-arrow{
-    display:flex;position:absolute;top:50%;transform:translateY(-50%);
+    display:flex;position:absolute;top:calc(100% + 10px);transform:none;
     z-index:5;width:40px;height:40px;border-radius:50%;
     border:1px solid var(--line);background:#fff;color:var(--ink);
     font-size:26px;line-height:1;align-items:center;justify-content:center;
     cursor:pointer;box-shadow:var(--shadow-sm);
   }
-  .scroller-wrap.scroller-ready .scroll-prev{left:-4px}
-  .scroller-wrap.scroller-ready .scroll-next{right:-4px}
+  .scroller-wrap.scroller-ready .scroll-prev{left:calc(50% - 46px)}
+  .scroller-wrap.scroller-ready .scroll-next{right:calc(50% - 46px)}
   .scroller-wrap.scroller-ready .scroll-arrow:disabled{opacity:.35;cursor:default}
 }
