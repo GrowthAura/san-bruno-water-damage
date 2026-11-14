@@ -202,7 +202,7 @@ $PAGE_IMG = [
     ],
     '/service-areas' => [
         'hero'   => ['file' => 'service-areas-san-bruno.jpg',
-            'alt' => 'Hillside homes above the San Francisco Bay near San Bruno, CA'],
+            'alt' => 'San Bruno BART station in San Bruno, CA'],
     ],
     '/millbrae-ca' => [
         'card'   => ['file' => 'millbrae-ca-station-san-bruno.jpg',
