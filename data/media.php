@@ -117,34 +117,46 @@ $PAGE_IMG = [
     '/emergency-water-extraction' => [
         'card'   => ['file' => 'emergency-water-extraction-card-san-bruno.jpg',
             'alt' => 'Flooded basement with standing water in San Bruno, CA'],
+        'body-1' => ['file' => 'emergency-water-extraction-body-san-bruno.jpg',
+            'alt' => 'Flooded laundry room with standing water and an air mover drying the floor in San Bruno, CA'],
     ],
     '/burst-pipe-water-damage' => [
         'card'   => ['file' => 'burst-pipe-water-damage-card-san-bruno.jpg',
             'alt' => 'Water spraying from a burst pipe joint in San Bruno, CA'],
         'hero'   => ['file' => 'burst-pipe-water-damage-san-bruno.jpg',
             'alt' => 'Water bursting from a broken pipe joint in San Bruno, CA'],
+        'body-1' => ['file' => 'burst-pipe-water-damage-body-san-bruno.jpg',
+            'alt' => 'Water spraying from a burst downspout elbow joint onto brick in San Bruno, CA'],
     ],
     '/sewage-backup-cleanup' => [
         'card'   => ['file' => 'sewage-backup-cleanup-card-san-bruno.jpg',
             'alt' => 'Cleanup worker in protective gear hosing a flooded floor in San Bruno, CA'],
+        'body-1' => ['file' => 'sewage-backup-cleanup-body-san-bruno.jpg',
+            'alt' => 'Sewer worker in a hazmat suit and gas mask climbing out of a street manhole in San Bruno, CA'],
     ],
     '/crawl-space-water-damage' => [
         'card'   => ['file' => 'crawl-space-water-damage-card-san-bruno.jpg',
             'alt' => 'Standing water pooled on plastic sheeting in a crawl space in San Bruno, CA'],
         'hero'   => ['file' => 'crawl-space-water-damage-san-bruno.jpg',
             'alt' => 'Standing water in a crawl space in San Bruno, CA'],
+        'body-1' => ['file' => 'crawl-space-water-damage-body-san-bruno.jpg',
+            'alt' => 'Pooled water sheen on plastic sheeting in a block-wall crawl space with ducts overhead in San Bruno, CA'],
     ],
     '/hardwood-floor-water-damage' => [
         'card'   => ['file' => 'hardwood-floor-water-damage-card-san-bruno.jpg',
             'alt' => 'Water-damaged hardwood floor with a lifted board in San Bruno, CA'],
         'hero'   => ['file' => 'hardwood-floor-water-damage-san-bruno.jpg',
             'alt' => 'Buckled hardwood floor from water damage in San Bruno, CA'],
+        'body-1' => ['file' => 'hardwood-floor-water-damage-body-san-bruno.jpg',
+            'alt' => 'Wet hardwood floor with standing water and lifted boards along the wall in San Bruno, CA'],
     ],
     '/storm-flood-water-damage' => [
         'card'   => ['file' => 'storm-flood-water-damage-san-bruno.jpg',
             'alt' => 'Storm Flood Water Damage in San Bruno'],
         'hero'   => ['file' => 'storm-flood-water-damage-san-bruno.jpg',
             'alt' => 'Cars driving through a flooded street with DANGER HIGH WATER signs after a storm near San Bruno, CA'],
+        'body-1' => ['file' => 'storm-flood-water-damage-body-san-bruno.jpg',
+            'alt' => 'Flooded residential street with cars submerged to their roofs after a storm near San Bruno, CA'],
     ],
     '/roof-leak-ceiling-water-damage' => [
         'card'   => ['file' => 'roof-leak-ceiling-water-damage-v3-san-bruno.jpg',
@@ -159,6 +171,8 @@ $PAGE_IMG = [
             'alt' => 'Commercial Water Damage in San Bruno'],
         'hero'   => ['file' => 'commercial-water-damage-v3-san-bruno.jpg',
             'alt' => 'Flood-damaged clothing shop interior with mud-stained clothes on racks above a wet tiled floor in San Bruno, CA'],
+        'body-1' => ['file' => 'commercial-water-damage-body-san-bruno.jpg',
+            'alt' => 'Flooded workshop with standing water across the floor and a man in waders at the door in San Bruno, CA'],
     ],
     '/condo-water-damage' => [
         'card'   => ['file' => 'condo-water-damage-card-san-bruno.jpg',
@@ -181,6 +195,8 @@ $PAGE_IMG = [
             'alt' => 'Commercial dehumidifier drying a room in San Bruno, CA'],
         'hero'   => ['file' => 'structural-drying-san-bruno.jpg',
             'alt' => 'Structural drying equipment in a San Bruno, CA home'],
+        'body-1' => ['file' => 'structural-drying-body-san-bruno.jpg',
+            'alt' => 'Wheeled dehumidifier drying a buckled wood floor in San Bruno, CA'],
     ],
     '/water-heater-appliance-leak' => [
         'card'   => ['file' => 'water-heater-appliance-leak-v2-san-bruno.jpg',
@@ -197,6 +213,8 @@ $PAGE_IMG = [
     '/slab-leak-hidden-leak-water-damage' => [
         'card'   => ['file' => 'slab-leak-hidden-leak-water-damage-card-san-bruno.jpg',
             'alt' => 'Water across a wood floor from a hidden leak in San Bruno, CA'],
+        'hero'   => ['file' => 'slab-leak-hidden-leak-water-damage-san-bruno.jpg',
+            'alt' => 'Technician using an acoustic leak detector to trace a hidden water leak in San Bruno, CA'],
         'body-1' => ['file' => 'slab-leak-hidden-leak-water-damage-body-san-bruno.jpg',
             'alt' => 'Moisture meter and leak-detection tools on a wood floor'],
     ],
@@ -233,6 +251,30 @@ $PAGE_IMG = [
             'alt' => 'Water damage restoration in Brisbane, CA'],
         'hero'   => ['file' => 'brisbane-ca-visitacion-san-bruno.jpg',
             'alt' => 'Visitacion Avenue with San Bruno Mountain in Brisbane, CA'],
+    ],
+    // EMPTY-SLOT ROUND, 2026-11-15 (qa/FINDINGS-EMPTYSLOTS-INSTALL-2026-11-15.md):
+    // 'detail' in-page photos for the 5 zero-image pages. 'detail' renders
+    // generically after the first block (index.php:487, .detail-figure);
+    // no captions (visible words stay doc-verbatim).
+    '/about' => [
+        'detail' => ['file' => 'about-aerial-san-bruno.jpg',
+            'alt' => 'Aerial view of San Bruno with SFO runways, San Andreas Lake and San Bruno Mountain'],
+    ],
+    '/contact' => [
+        'detail' => ['file' => 'contact-station-bridge-san-bruno.jpg',
+            'alt' => 'San Bruno Station bridge over San Bruno Avenue in San Bruno, CA'],
+    ],
+    '/resources/peninsula-fog-mold-prevention' => [
+        'detail' => ['file' => 'peninsula-fog-mold-prevention-san-bruno.jpg',
+            'alt' => 'Fog rolling over the San Bruno Mountain ridge in San Bruno, CA'],
+    ],
+    '/resources/san-bruno-sewer-lateral-inspection' => [
+        'detail' => ['file' => 'san-bruno-sewer-lateral-inspection-san-bruno.jpg',
+            'alt' => 'Technician feeding a drain-camera cable into a floor drain with a monitor showing the camera feed in San Bruno, CA'],
+    ],
+    '/resources/old-pipe-warning-signs-san-bruno' => [
+        'detail' => ['file' => 'old-pipe-warning-signs-san-bruno.jpg',
+            'alt' => 'Rusty water leaking from a corroded pipe into a floor grate in San Bruno, CA'],
     ],
     '/resources/water-damage-restoration-cost-san-bruno' => [
         'hero'   => ['file' => 'water-damage-cost-san-bruno.jpg',

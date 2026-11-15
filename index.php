@@ -144,8 +144,8 @@ function final_cta_compact($formTarget = '#request-service') {
     return $out;
 }
 
-// Photo credits page (P2-3 fix, 2026-11-15): standalone utility page
-// listing the 28 images whose licences require attribution (CC BY /
+// Photo credits page (P2-3 fix, 2026-11-15; +10 empty-slot Phase 2, 2026-11-15): standalone utility page
+// listing the 38 images whose licences require attribution (CC BY /
 // CC BY-SA). noindex, out of the sitemap, no canonical, no og:image.
 // Usage labels + alt text are derived from $PAGE_IMG at render time;
 // author / licence / source come from data/photo-credits.php.
@@ -190,7 +190,7 @@ function render_photo_credits() {
   </div>
 </section>
 <section class="section"><div class="container content-block">
-  <p>Photographs on this site come from Flickr and Wikimedia Commons. The 28 images listed below are shared under Creative Commons licences that require attribution. Each credit names the photographer, the licence, and a link to the source page. The other photographs on this site need no credit: they are public domain, CC0, or from Pexels.</p>
+  <p>Photographs on this site come from Flickr and Wikimedia Commons. The 38 images listed below are shared under Creative Commons licences that require attribution. Each credit names the photographer, the licence, and a link to the source page. The other photographs on this site need no credit: they are public domain, CC0, or from Pexels.</p>
   <ul class="credit-list">
   <?php foreach ($PHOTO_CREDITS as $c):
       $info = $byFile[$c['file']] ?? ['alt' => $c['file'], 'uses' => []];

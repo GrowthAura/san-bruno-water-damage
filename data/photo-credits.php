@@ -1,9 +1,9 @@
 <?php
-// Photo credits (P2-3 fix, 2026-11-15): the 28 images on this site
+// Photo credits (P2-3 fix, 2026-11-15; +10 empty-slot Phase 2, 2026-11-15): the 38 images on this site
 // whose licences require attribution (CC BY / CC BY-SA, all versions).
 // Source page URLs resolved from qa/manifest-*.json records
 // (installed-filename or photo-ID match) or the Commons File: page.
-// The 14 other images need no credit (public domain, CC0, Pexels).
+// The 18 other images need no credit (public domain, CC0, Pexels).
 // Rendered ONLY on /photo-credits (noindex, out of the sitemap).
 $PHOTO_CREDITS = [
     [
@@ -12,6 +12,13 @@ $PHOTO_CREDITS = [
         'license_url' => 'https://creativecommons.org/licenses/by-sa/4.0/',
         'author' => 'Acj sf',
         'source_url' => 'https://commons.wikimedia.org/wiki/File:Brisbane%2C_CA_-_Visitacion_Avenue.jpg',
+    ],
+    [
+        'file' => 'burst-pipe-water-damage-body-san-bruno.jpg',
+        'license' => 'CC BY 2.0',
+        'license_url' => 'https://creativecommons.org/licenses/by/2.0/',
+        'author' => 'Rainbow International Franchise',
+        'source_url' => 'https://www.flickr.com/photos/167863103@N02/51747772577',
     ],
     [
         'file' => 'burst-pipe-water-damage-card-san-bruno.jpg',
@@ -49,6 +56,20 @@ $PHOTO_CREDITS = [
         'source_url' => 'https://commons.wikimedia.org/wiki/File:Kitchen_after_Katrina_Federal_Flood_New_Orleans.jpg',
     ],
     [
+        'file' => 'contact-station-bridge-san-bruno.jpg',
+        'license' => 'CC BY 4.0',
+        'license_url' => 'https://creativecommons.org/licenses/by/4.0/',
+        'author' => '4300streetcar',
+        'source_url' => 'https://commons.wikimedia.org/wiki/File:San_Bruno_station_bridge_over_San_Bruno_Ave_January_2026.jpg',
+    ],
+    [
+        'file' => 'crawl-space-water-damage-body-san-bruno.jpg',
+        'license' => 'CC BY 2.0',
+        'license_url' => 'https://creativecommons.org/licenses/by/2.0/',
+        'author' => 'homejobsbymom',
+        'source_url' => 'https://www.flickr.com/photos/76588981@N02/6900687365',
+    ],
+    [
         'file' => 'crawl-space-water-damage-card-san-bruno.jpg',
         'license' => 'CC BY 2.0',
         'license_url' => 'https://creativecommons.org/licenses/by/2.0/',
@@ -63,11 +84,25 @@ $PHOTO_CREDITS = [
         'source_url' => 'https://www.flickr.com/photos/20775821@N03/6071725874',
     ],
     [
+        'file' => 'emergency-water-extraction-body-san-bruno.jpg',
+        'license' => 'CC BY-SA 2.0',
+        'license_url' => 'https://creativecommons.org/licenses/by-sa/2.0/',
+        'author' => 'waynewalterberry',
+        'source_url' => 'https://www.flickr.com/photos/33509969@N08/52478340175',
+    ],
+    [
         'file' => 'emergency-water-extraction-card-san-bruno.jpg',
         'license' => 'CC BY 2.0',
         'license_url' => 'https://creativecommons.org/licenses/by/2.0/',
         'author' => 'carlpenergy',
         'source_url' => 'https://www.flickr.com/photos/70237334@N04/6379729531',
+    ],
+    [
+        'file' => 'hardwood-floor-water-damage-body-san-bruno.jpg',
+        'license' => 'CC BY-SA 2.0',
+        'license_url' => 'https://creativecommons.org/licenses/by-sa/2.0/',
+        'author' => 'laser2k',
+        'source_url' => 'https://www.flickr.com/photos/laser2k/768421933',
     ],
     [
         'file' => 'hardwood-floor-water-damage-card-san-bruno.jpg',
@@ -103,6 +138,13 @@ $PHOTO_CREDITS = [
         'license_url' => 'https://creativecommons.org/licenses/by/2.0/',
         'author' => 'andydr (Flickr)',
         'source_url' => 'https://www.flickr.com/photos/94989596@N00/16210287',
+    ],
+    [
+        'file' => 'old-pipe-warning-signs-san-bruno.jpg',
+        'license' => 'CC BY-SA 3.0',
+        'license_url' => 'https://creativecommons.org/licenses/by-sa/3.0/',
+        'author' => 'aismallard',
+        'source_url' => 'https://commons.wikimedia.org/wiki/File:Corroded_water_pipe.jpg',
     ],
     [
         'file' => 'process-2-wood-moisture-meter-san-bruno.jpg',
@@ -147,11 +189,25 @@ $PHOTO_CREDITS = [
         'source_url' => 'https://www.flickr.com/photos/26344495@N05/49976622726',
     ],
     [
+        'file' => 'san-bruno-sewer-lateral-inspection-san-bruno.jpg',
+        'license' => 'CC BY-SA 4.0',
+        'license_url' => 'https://creativecommons.org/licenses/by-sa/4.0/',
+        'author' => 'FiberscopeDOTnet',
+        'source_url' => 'https://commons.wikimedia.org/wiki/File:CCTV_Inspection_of_Weeping_Tile_with_the_VIPER_Drain_Camera.jpg',
+    ],
+    [
         'file' => 'service-areas-san-bruno.jpg',
         'license' => 'CC BY-SA 3.0',
         'license_url' => 'https://creativecommons.org/licenses/by-sa/3.0/',
         'author' => 'Pi.1415926535',
         'source_url' => 'https://commons.wikimedia.org/wiki/File:San_Bruno_station_from_garage%2C_June_2018.JPG',
+    ],
+    [
+        'file' => 'sewage-backup-cleanup-body-san-bruno.jpg',
+        'license' => 'CC BY-SA 2.0',
+        'license_url' => 'https://creativecommons.org/licenses/by-sa/2.0/',
+        'author' => 'Łukasz Lech',
+        'source_url' => 'https://commons.wikimedia.org/wiki/File:Sewer_worker_in_San_Francisco_(4434054443).jpg',
     ],
     [
         'file' => 'slab-leak-hidden-leak-water-damage-body-san-bruno.jpg',
@@ -168,11 +224,25 @@ $PHOTO_CREDITS = [
         'source_url' => 'https://www.flickr.com/photos/31300756@N02/9733089175',
     ],
     [
+        'file' => 'slab-leak-hidden-leak-water-damage-san-bruno.jpg',
+        'license' => 'CC BY-SA 4.0',
+        'license_url' => 'https://creativecommons.org/licenses/by-sa/4.0/',
+        'author' => 'Alremasalhaitham',
+        'source_url' => 'https://commons.wikimedia.org/wiki/File:Water_leak_detection.jpg',
+    ],
+    [
         'file' => 'south-san-francisco-ca-city-hall-san-bruno.jpg',
         'license' => 'CC BY-SA 3.0',
         'license_url' => 'https://creativecommons.org/licenses/by-sa/3.0/',
         'author' => 'Mliu92',
         'source_url' => 'https://commons.wikimedia.org/wiki/File:South_San_Francisco_Municipal_Building.jpg',
+    ],
+    [
+        'file' => 'structural-drying-body-san-bruno.jpg',
+        'license' => 'CC BY-SA 4.0',
+        'license_url' => 'https://creativecommons.org/licenses/by-sa/4.0/',
+        'author' => 'Raimond Spekking',
+        'source_url' => 'https://commons.wikimedia.org/wiki/File:Wasserschaden_K%C3%B6lnisches_Stadtmuseum_Juni_2017-5564.jpg',
     ],
     [
         'file' => 'structural-drying-san-bruno.jpg',
