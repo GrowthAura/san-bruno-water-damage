@@ -85,14 +85,14 @@ h1,h2,h3,h4{
   text-wrap:balance;
 }
 h1{font-size:clamp(2.4rem,4.8vw,3.9rem);font-weight:560;letter-spacing:-.02em;text-wrap:balance}
-h2{font-size:clamp(1.85rem,3.2vw,2.6rem);margin-bottom:.55em;font-weight:580;text-wrap:balance;max-width:88ch}
+h2{font-size:clamp(1.85rem,3.2vw,2.35rem);margin-bottom:.55em;font-weight:580;text-wrap:balance;max-width:88ch;color:#045A7E}
 /* End-level H2: short gold rule under every H2, centred when the H2 is centred. */
 h2::after{
   content:"";display:block;width:56px;height:3px;border-radius:2px;
   background:var(--gold);margin-top:16px;
 }
 .center h2::after,.final-cta-card h2::after{margin-left:auto;margin-right:auto}
-h3{font-size:clamp(1.25rem,2.2vw,1.6rem);margin-bottom:.5em;font-weight:650}
+h3{font-size:clamp(1.25rem,2.2vw,1.6rem);margin-bottom:.5em;font-weight:650;color:var(--gold-deep)}
 p{margin-bottom:1.15em}
 ul,ol{margin:0 0 1.15em 1.3em}
 li{margin-bottom:.5em}
@@ -215,6 +215,7 @@ li{margin-bottom:.5em}
 .hero-intro{font-size:1.15rem;line-height:1.7;color:#E6EEF5;max-width:72ch;margin-bottom:30px}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:14px}
 .hero-ctas .btn{min-width:min(300px,100%)}
+.closing-ctas{margin-top:28px}
 .hero-short .hero-content{padding:72px 28px 80px}
 .hero-short .hero-intro{margin-bottom:0}
 
@@ -394,15 +395,6 @@ li{margin-bottom:.5em}
 .crumbs span[aria-hidden="true"]{margin:0 8px}
 .detail-figure{margin:28px 0;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)}
 .detail-figure img{width:100%;aspect-ratio:16/9;object-fit:cover}
-
-/* ---------- Photo credits (P2-3, 2026-11-15) ---------- */
-.credit-list{list-style:none;margin:0;padding:0}
-.credit-item{display:flex;gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}
-.credit-thumb{flex:0 0 172px}
-.credit-thumb img{width:100%;height:auto;border-radius:8px;display:block}
-.credit-meta p{margin-bottom:6px}
-.credit-meta p:last-child{margin-bottom:0}
-@media (max-width:640px){.credit-item{flex-direction:column}.credit-thumb{flex-basis:auto;max-width:280px}}
 
 /* ---------- Footer map + footer ---------- */
 .footer-map-wrap{height:340px}
