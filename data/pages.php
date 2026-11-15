@@ -1180,7 +1180,7 @@ $PAGE_CONTENT = [
                     'text' => 'Most emergency water extraction San Bruno calls in winter come from storms. Heavy rain can push water into garages, crawl spaces and ground floors, especially in low areas near San Bruno Creek and on the downhill side of hillside streets. The storm and flood damage page covers that in detail.',
                     'links' => [
                         [
-                            'anchor' => 'storm and flood damage',
+                            'anchor' => 'storm and flood damage page',
                             'href' => '/storm-flood-water-damage',
                             'pos' => 293,
                         ],
@@ -1950,7 +1950,7 @@ $PAGE_CONTENT = [
                     'text' => 'San Bruno requires a sewer lateral inspection when a home is sold. If the inspection finds problems, the lateral has to be repaired or replaced, and the cost falls on the owner. If you are buying or selling an older home, this is worth planning for. The sewer lateral guide explains the rule in plain terms.',
                     'links' => [
                         [
-                            'anchor' => 'sewer lateral inspection',
+                            'anchor' => 'sewer lateral guide',
                             'href' => '/resources/san-bruno-sewer-lateral-inspection',
                             'pos' => 307,
                         ],
@@ -7759,7 +7759,7 @@ $PAGE_CONTENT = [
                     'text' => 'Water from outside is classified as Category 3, or black water. It can carry sewage, chemicals and bacteria. That means carpet, pad, upholstered furniture and drywall it touched usually need to be removed, and all surfaces need to be cleaned and disinfected before drying. Simply drying things out is not enough. More details are on the storm and flood damage page.',
                     'links' => [
                         [
-                            'anchor' => 'storm and flood damage',
+                            'anchor' => 'storm and flood damage page',
                             'href' => '/storm-flood-water-damage',
                             'pos' => 365,
                         ],

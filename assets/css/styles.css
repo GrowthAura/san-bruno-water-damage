@@ -268,7 +268,7 @@ li{margin-bottom:.5em}
 .card-body p{margin-bottom:0;color:var(--text)}
 
 /* ---------- Process ---------- */
-.phase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:36px}
+.phase-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:36px;grid-auto-rows:1fr}
 .phase-card{
   background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
   border-radius:var(--radius);overflow:hidden;
@@ -329,10 +329,20 @@ li{margin-bottom:.5em}
 .faq-toggle{
   width:34px;height:34px;border-radius:50%;border:2px solid var(--gold);
   color:var(--gold-deep);display:flex;align-items:center;justify-content:center;
-  font-size:22px;font-weight:700;flex-shrink:0;line-height:1;
+  font-size:0;font-weight:700;flex-shrink:0;line-height:1;
+}
+/* P2+P3 round (2026-11-15, P3-8): the old "+" glyph rotated 45deg when a
+   FAQ was open, so every open FAQ (all 145 are open by default) showed a
+   bare "x". The "+" text stays in the DOM (aria-hidden) but is hidden
+   visually; the marker is now a CSS chevron: down when closed, up when
+   open — a proper collapse indicator, no fake "x". */
+.faq-toggle::after{
+  content:"";width:10px;height:10px;flex-shrink:0;
+  border-right:2.5px solid var(--gold-deep);border-bottom:2.5px solid var(--gold-deep);
+  transform:rotate(45deg);margin-top:-4px;
   transition:transform .2s ease;
 }
-.faq-list details[open ] .faq-toggle{transform:rotate(45deg)}
+.faq-list details[open ] .faq-toggle::after{transform:rotate(225deg);margin-top:3px}
 .faq-list summary:hover h3{color:var(--gold-deep)}
 .faq-answer{padding:0 4px 20px;max-width:88ch}
 .faq-answer p{margin-bottom:0}
@@ -384,6 +394,15 @@ li{margin-bottom:.5em}
 .crumbs span[aria-hidden="true"]{margin:0 8px}
 .detail-figure{margin:28px 0;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm)}
 .detail-figure img{width:100%;aspect-ratio:16/9;object-fit:cover}
+
+/* ---------- Photo credits (P2-3, 2026-11-15) ---------- */
+.credit-list{list-style:none;margin:0;padding:0}
+.credit-item{display:flex;gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}
+.credit-thumb{flex:0 0 172px}
+.credit-thumb img{width:100%;height:auto;border-radius:8px;display:block}
+.credit-meta p{margin-bottom:6px}
+.credit-meta p:last-child{margin-bottom:0}
+@media (max-width:640px){.credit-item{flex-direction:column}.credit-thumb{flex-basis:auto;max-width:280px}}
 
 /* ---------- Footer map + footer ---------- */
 .footer-map-wrap{height:340px}
@@ -491,8 +510,15 @@ li{margin-bottom:.5em}
   .eyebrow{margin-bottom:14px}
   .hero-ctas{flex-direction:column}
   .hero-ctas .btn{width:100%}
+  /* P2+P3 round (2026-11-15, P2-2): at mobile widths the final-CTA pair
+     stacks full-width; "Request Emergency Help" wraps to 2 lines (77px)
+     while the phone button stays 1 line (56px). A grid with 1fr rows
+     forces both rows to the tallest content height, so the pair is
+     exactly equal at any width — no word changes, no clipping. Hero
+     buttons are untouched (their slot is wider and already equal). */
+  .final-cta .hero-ctas{display:grid;grid-template-columns:1fr;grid-auto-rows:1fr}
   .cards{grid-template-columns:1fr}
-  .phase-grid{grid-template-columns:1fr}
+  .phase-grid{grid-template-columns:1fr;grid-auto-rows:auto}
   .cat-grid{grid-template-columns:1fr}
   .cause-grid{grid-template-columns:1fr}
   .home-grid{grid-template-columns:1fr}

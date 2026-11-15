@@ -21,6 +21,9 @@ $notice = $form['notice'] ?? false;
     <p><strong>Please fix the following:</strong> <?= esc(implode(' ', $errors)) ?></p>
   </div>
   <?php endif; ?>
+  <div class="form-note">
+    <p><strong>This form does not send email yet.</strong> No email address has been set up for requests.</p>
+  </div>
   <form method="post" action="" novalidate>
     <label for="f-name">Your name</label>
     <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120" value="<?= esc($values['name'] ?? '') ?>">

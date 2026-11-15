@@ -80,6 +80,14 @@ if (isset($PAGES[$path])) {
     exit;
 }
 
+// 5b. Photo credits (P2-3 fix, 2026-11-15) — utility page, NOT in $PAGES:
+// noindex, out of the sitemap (sitemap stays 28 locs). The slash form
+// 308s to the no-slash form via rule 1 above, same as every route.
+if ($path === '/photo-credits') {
+    render_photo_credits();
+    exit;
+}
+
 // 6. 404.
 http_response_code(404);
 $HEAD = [
@@ -136,6 +144,79 @@ function final_cta_compact($formTarget = '#request-service') {
     return $out;
 }
 
+// Photo credits page (P2-3 fix, 2026-11-15): standalone utility page
+// listing the 28 images whose licences require attribution (CC BY /
+// CC BY-SA). noindex, out of the sitemap, no canonical, no og:image.
+// Usage labels + alt text are derived from $PAGE_IMG at render time;
+// author / licence / source come from data/photo-credits.php.
+function render_photo_credits() {
+    global $ROOT, $SITE, $HOME_META, $SERVICES, $AREAS, $COST_GUIDE, $STORM_GUIDE, $PAGE_IMG, $IMG;
+    require $ROOT . '/data/photo-credits.php';
+    $HEAD = [
+        'title' => 'Photo Credits | ' . $SITE['brand'],
+        'description' => 'Photographers and licences for the Creative Commons images used on this site.',
+        'robots' => 'noindex, follow',
+        'og_type' => 'website',
+        'ld' => ld_json([ld_local_business()]),
+    ];
+    $currentSlug = '/photo-credits';
+    $show_map = false;
+    $pageName = function ($slug) use ($SERVICES, $AREAS, $COST_GUIDE, $STORM_GUIDE) {
+        if ($slug === '/') return 'Homepage';
+        if ($slug === '/service-areas') return 'Service Areas';
+        foreach ($SERVICES as $s) if ($s['slug'] === $slug) return $s['nav'];
+        foreach ($AREAS as $a) if ($a['slug'] === $slug) return $a['city'] . ', CA';
+        if ($slug === $COST_GUIDE['slug']) return 'Water Damage Restoration Cost';
+        if ($slug === $STORM_GUIDE['slug']) return 'Belle Air Storm Flood Checklist';
+        if (str_starts_with($slug, 'process-')) return 'Our Process, step ' . substr($slug, 8);
+        return $slug;
+    };
+    $kindName = ['card' => 'service card', 'hero' => 'page hero', 'body-1' => 'body image', 'img' => 'process image'];
+    $byFile = [];
+    foreach ($PAGE_IMG as $slug => $kinds) {
+        foreach ($kinds as $kind => $entry) {
+            $f = $entry['file'];
+            if (!isset($byFile[$f])) $byFile[$f] = ['alt' => $entry['alt'], 'uses' => []];
+            $byFile[$f]['uses'][] = $pageName($slug) . ' — ' . ($kindName[$kind] ?? $kind);
+        }
+    }
+    require $ROOT . '/includes/header.php';
+    ?>
+<section class="hero hero-short">
+  <div class="container hero-content">
+    <p class="eyebrow on-navy"><?= esc($HOME_META['eyebrow']) ?></p>
+    <h1>Photo Credits</h1>
+    <p class="hero-intro">Photographers and licences for the images on this site.</p>
+  </div>
+</section>
+<section class="section"><div class="container content-block">
+  <p>Photographs on this site come from Flickr and Wikimedia Commons. The 28 images listed below are shared under Creative Commons licences that require attribution. Each credit names the photographer, the licence, and a link to the source page. The other photographs on this site need no credit: they are public domain, CC0, or from Pexels.</p>
+  <ul class="credit-list">
+  <?php foreach ($PHOTO_CREDITS as $c):
+      $info = $byFile[$c['file']] ?? ['alt' => $c['file'], 'uses' => []];
+      // Thumbnail: the 400w variant when one exists (all 1280w/1088w/704w
+      // files have one); 343w card files render as-is (already small).
+      $stem = pathinfo($c['file'], PATHINFO_FILENAME);
+      $thumbFile = $stem . '-400w.jpg';
+      $thumb = is_file($ROOT . '/assets/img/' . $thumbFile)
+          ? ['src' => $IMG . $thumbFile, 'alt' => $info['alt'], 'file' => $thumbFile]
+          : ['src' => $IMG . $c['file'], 'alt' => $info['alt'], 'file' => $c['file']];
+  ?>
+    <li class="credit-item">
+      <div class="credit-thumb"><?= img_tag($thumb, 400, 225) ?></div>
+      <div class="credit-meta">
+        <p><strong><?= esc($info['alt']) ?></strong></p>
+        <p>Used on: <?= esc(implode('; ', $info['uses'])) ?></p>
+        <p>Photographer: <?= esc($c['author']) ?> &middot; Licence: <a href="<?= esc($c['license_url']) ?>" target="_blank" rel="noopener"><?= esc($c['license']) ?></a> &middot; Source: <a href="<?= esc($c['source_url']) ?>" target="_blank" rel="noopener">View source</a></p>
+      </div>
+    </li>
+  <?php endforeach; ?>
+  </ul>
+</div></section>
+<?php
+    require $ROOT . '/includes/footer.php';
+}
+
 function render_home($form = null) {
     global $ROOT, $SITE, $HOME_META, $TRUST, $FIRST_STEPS, $SERVICES, $SERVICES_H2,
         $SERVICES_INTRO, $WHY_H2, $WHY_INTRO, $WHY_REASONS, $PROCESS_H2,
@@ -188,7 +269,7 @@ function render_home($form = null) {
   <p>Water damage restoration in San Bruno, CA starts the moment you pick up the phone.</p>
   <a class="btn btn-navy" href="#request-service">Request Emergency Help</a>
 </div></aside></div></div></section>
-<section class="section section-cream"><div class="container content-block">
+<section class="section section-cream" id="services"><div class="container content-block">
   <h2><?= esc($SERVICES_H2) ?></h2>
   <p class="lead"><?= esc($SERVICES_INTRO) ?></p>
   <div class="scroller-wrap">
@@ -196,7 +277,7 @@ function render_home($form = null) {
     <div class="cards scroller">
     <?php foreach ($SERVICES as $c): $cimg = page_img($c['slug'], 'card'); ?>
     <article class="card">
-      <?php if ($cimg): ?><div class="card-media"><?= img_tag($cimg, 1200, 675) ?></div><?php endif; ?>
+      <?php if ($cimg): ?><div class="card-media"><?= img_tag($cimg, 1200, 675, 'lazy', '(max-width: 640px) 271px, 343px') ?></div><?php endif; ?>
       <div class="card-body"><h3><?= esc($c['h3']) ?></h3><?= card_para($c, '/') ?></div>
     </article>
     <?php endforeach; ?>
@@ -219,7 +300,7 @@ function render_home($form = null) {
   <div class="phase-grid">
     <?php foreach ($PROCESS_STEPS as $i => $s): $pimg = page_img('process-' . ($i + 1), 'img'); ?>
     <div class="phase-card">
-      <?php if ($pimg): ?><div class="phase-media"><?= img_tag($pimg, 1200, 675) ?></div><?php endif; ?>
+      <?php if ($pimg): ?><div class="phase-media"><?= img_tag($pimg, 1200, 675, 'lazy', '(max-width: 640px) 348px, 343px') ?></div><?php endif; ?>
       <h3><?= esc($s['h3']) ?></h3><p><?= esc($s['text']) ?></p>
     </div>
     <?php endforeach; ?>
@@ -264,8 +345,8 @@ function render_home($form = null) {
     <div class="area-strip scroller">
     <?php foreach ($AREAS as $a): $aimg = page_img($a['slug'], 'card'); ?>
     <a class="area-card" href="<?= esc($a['slug']) ?>">
-      <?= img_tag($aimg, 1200, 675) ?>
-      <span><?= esc($a['city']) ?>, CA <?= esc($a['zip']) ?></span>
+      <?= img_tag($aimg, 1200, 675, 'lazy', '(max-width: 640px) 217px, (max-width: 1020px) 309px, 230px') ?>
+      <span><?= esc($a['line']) ?></span>
     </a>
     <?php endforeach; ?>
     </div>

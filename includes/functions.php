@@ -202,7 +202,7 @@ function body_img_tag($slug, $key = 'body-1') {
     $img = page_img($slug, $key);
     if (!$img) return '';
     $caption = $PAGE_IMG[$slug][$key]['caption'] ?? null;
-    $html = '<figure class="body-figure">' . img_tag($img, 1200, 675);
+    $html = '<figure class="body-figure">' . img_tag($img, 1200, 675, 'lazy', '(max-width: 640px) 350px, 1088px');
     if ($caption !== null && $caption !== '') {
         $html .= '<figcaption>' . esc($caption) . '</figcaption>';
     }
