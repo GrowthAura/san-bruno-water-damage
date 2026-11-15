@@ -80,14 +80,6 @@ if (isset($PAGES[$path])) {
     exit;
 }
 
-// 5b. Photo credits (P2-3 fix, 2026-11-15) — utility page, NOT in $PAGES:
-// noindex, out of the sitemap (sitemap stays 28 locs). The slash form
-// 308s to the no-slash form via rule 1 above, same as every route.
-if ($path === '/photo-credits') {
-    render_photo_credits();
-    exit;
-}
-
 // 6. 404.
 http_response_code(404);
 $HEAD = [
@@ -142,79 +134,6 @@ function final_cta_compact($formTarget = '#request-service') {
     $out .= hero_buttons($formTarget);
     $out .= '</div></div></section>';
     return $out;
-}
-
-// Photo credits page (P2-3 fix, 2026-11-15; +10 empty-slot Phase 2, 2026-11-15): standalone utility page
-// listing the 38 images whose licences require attribution (CC BY /
-// CC BY-SA). noindex, out of the sitemap, no canonical, no og:image.
-// Usage labels + alt text are derived from $PAGE_IMG at render time;
-// author / licence / source come from data/photo-credits.php.
-function render_photo_credits() {
-    global $ROOT, $SITE, $HOME_META, $SERVICES, $AREAS, $COST_GUIDE, $STORM_GUIDE, $PAGE_IMG, $IMG;
-    require $ROOT . '/data/photo-credits.php';
-    $HEAD = [
-        'title' => 'Photo Credits | ' . $SITE['brand'],
-        'description' => 'Photographers and licences for the Creative Commons images used on this site.',
-        'robots' => 'noindex, follow',
-        'og_type' => 'website',
-        'ld' => ld_json([ld_local_business()]),
-    ];
-    $currentSlug = '/photo-credits';
-    $show_map = false;
-    $pageName = function ($slug) use ($SERVICES, $AREAS, $COST_GUIDE, $STORM_GUIDE) {
-        if ($slug === '/') return 'Homepage';
-        if ($slug === '/service-areas') return 'Service Areas';
-        foreach ($SERVICES as $s) if ($s['slug'] === $slug) return $s['nav'];
-        foreach ($AREAS as $a) if ($a['slug'] === $slug) return $a['city'] . ', CA';
-        if ($slug === $COST_GUIDE['slug']) return 'Water Damage Restoration Cost';
-        if ($slug === $STORM_GUIDE['slug']) return 'Belle Air Storm Flood Checklist';
-        if (str_starts_with($slug, 'process-')) return 'Our Process, step ' . substr($slug, 8);
-        return $slug;
-    };
-    $kindName = ['card' => 'service card', 'hero' => 'page hero', 'body-1' => 'body image', 'img' => 'process image'];
-    $byFile = [];
-    foreach ($PAGE_IMG as $slug => $kinds) {
-        foreach ($kinds as $kind => $entry) {
-            $f = $entry['file'];
-            if (!isset($byFile[$f])) $byFile[$f] = ['alt' => $entry['alt'], 'uses' => []];
-            $byFile[$f]['uses'][] = $pageName($slug) . ' — ' . ($kindName[$kind] ?? $kind);
-        }
-    }
-    require $ROOT . '/includes/header.php';
-    ?>
-<section class="hero hero-short">
-  <div class="container hero-content">
-    <p class="eyebrow on-navy"><?= esc($HOME_META['eyebrow']) ?></p>
-    <h1>Photo Credits</h1>
-    <p class="hero-intro">Photographers and licences for the images on this site.</p>
-  </div>
-</section>
-<section class="section"><div class="container content-block">
-  <p>Photographs on this site come from Flickr and Wikimedia Commons. The 38 images listed below are shared under Creative Commons licences that require attribution. Each credit names the photographer, the licence, and a link to the source page. The other photographs on this site need no credit: they are public domain, CC0, or from Pexels.</p>
-  <ul class="credit-list">
-  <?php foreach ($PHOTO_CREDITS as $c):
-      $info = $byFile[$c['file']] ?? ['alt' => $c['file'], 'uses' => []];
-      // Thumbnail: the 400w variant when one exists (all 1280w/1088w/704w
-      // files have one); 343w card files render as-is (already small).
-      $stem = pathinfo($c['file'], PATHINFO_FILENAME);
-      $thumbFile = $stem . '-400w.jpg';
-      $thumb = is_file($ROOT . '/assets/img/' . $thumbFile)
-          ? ['src' => $IMG . $thumbFile, 'alt' => $info['alt'], 'file' => $thumbFile]
-          : ['src' => $IMG . $c['file'], 'alt' => $info['alt'], 'file' => $c['file']];
-  ?>
-    <li class="credit-item">
-      <div class="credit-thumb"><?= img_tag($thumb, 400, 225) ?></div>
-      <div class="credit-meta">
-        <p><strong><?= esc($info['alt']) ?></strong></p>
-        <p>Used on: <?= esc(implode('; ', $info['uses'])) ?></p>
-        <p>Photographer: <?= esc($c['author']) ?> &middot; Licence: <a href="<?= esc($c['license_url']) ?>" target="_blank" rel="noopener"><?= esc($c['license']) ?></a> &middot; Source: <a href="<?= esc($c['source_url']) ?>" target="_blank" rel="noopener">View source</a></p>
-      </div>
-    </li>
-  <?php endforeach; ?>
-  </ul>
-</div></section>
-<?php
-    require $ROOT . '/includes/footer.php';
 }
 
 function render_home($form = null) {
@@ -492,10 +411,13 @@ function render_page($slug, $page, $form = null) {
   <div class="form-wrap">
     <?php require $ROOT . '/includes/lead-form.php'; ?>
   </div>
+  <?php elseif (in_array($page['type'], ['area', 'area-hub', 'about'], true)): ?>
+  <div class="closing-ctas">
+    <?= hero_buttons($formTarget) ?>
+  </div>
   <?php endif; ?>
 
 <?= call_strip() ?>
-<?= final_cta_compact($formTarget) ?>
 <?php
     require $ROOT . '/includes/footer.php';
 }

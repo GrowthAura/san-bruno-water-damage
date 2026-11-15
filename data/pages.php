@@ -37,6 +37,7 @@ $TRUST = [
     '24/7 Phone Line',
     'Serving San Bruno 94066 & the North Peninsula',
     'Homes, Condos & Businesses',
+    'Photo & Moisture Records for Your Claim',
 ];
 
 $FIRST_STEPS = [
@@ -4080,41 +4081,6 @@ $PAGE_CONTENT = [
                 ],
             ],
             [
-                'h2' => 'Mold Remediation FAQs',
-            ],
-            [
-                'faq' => [
-                    'q' => 'How long does mold remediation take?',
-                    'a' => [
-                        'Small areas often take one to two days. Larger jobs with drying and repairs can take a week or more.',
-                    ],
-                ],
-            ],
-            [
-                'faq' => [
-                    'q' => 'Can I stay home during mold remediation?',
-                    'a' => [
-                        'Often yes, because the work area is contained. For large jobs or sensitive family members, staying elsewhere may be better.',
-                    ],
-                ],
-            ],
-            [
-                'faq' => [
-                    'q' => 'Will mold come back?',
-                    'a' => [
-                        'Not if the moisture source is fixed and the area is dried properly. Mold needs moisture to grow, so the long-term answer is controlling water: repairing leaks quickly, improving ventilation in bathrooms and closets, keeping crawl spaces dry, and running a dehumidifier in rooms that stay damp. In foggy San Bruno neighborhoods, a simple humidity monitor helps you spot rising moisture before mold has a chance to return.',
-                    ],
-                ],
-            ],
-            [
-                'faq' => [
-                    'q' => 'Does insurance cover mold?',
-                    'a' => [
-                        'Mold from a sudden covered water loss is sometimes covered. Mold from long-term leaks or humidity is often excluded. Check your policy.',
-                    ],
-                ],
-            ],
-            [
                 'h2' => 'Mold Testing: When It Helps',
             ],
             [
@@ -4179,6 +4145,41 @@ $PAGE_CONTENT = [
             ],
             [
                 'p' => 'For mold remediation in San Bruno and mold removal in San Bruno, CA that stops the problem at the source, call (650) 822-6798. A crew is dispatched immediately.',
+            ],
+            [
+                'h2' => 'Mold Remediation FAQs',
+            ],
+            [
+                'faq' => [
+                    'q' => 'How long does mold remediation take?',
+                    'a' => [
+                        'Small areas often take one to two days. Larger jobs with drying and repairs can take a week or more.',
+                    ],
+                ],
+            ],
+            [
+                'faq' => [
+                    'q' => 'Can I stay home during mold remediation?',
+                    'a' => [
+                        'Often yes, because the work area is contained. For large jobs or sensitive family members, staying elsewhere may be better.',
+                    ],
+                ],
+            ],
+            [
+                'faq' => [
+                    'q' => 'Will mold come back?',
+                    'a' => [
+                        'Not if the moisture source is fixed and the area is dried properly. Mold needs moisture to grow, so the long-term answer is controlling water: repairing leaks quickly, improving ventilation in bathrooms and closets, keeping crawl spaces dry, and running a dehumidifier in rooms that stay damp. In foggy San Bruno neighborhoods, a simple humidity monitor helps you spot rising moisture before mold has a chance to return.',
+                    ],
+                ],
+            ],
+            [
+                'faq' => [
+                    'q' => 'Does insurance cover mold?',
+                    'a' => [
+                        'Mold from a sudden covered water loss is sometimes covered. Mold from long-term leaks or humidity is often excluded. Check your policy.',
+                    ],
+                ],
             ],
         ],
         'eyebrow' => 'MOLD REMEDIATION • SAN BRUNO, CALIFORNIA',
@@ -5607,7 +5608,7 @@ $PAGE_CONTENT = [
                     'text' => 'Emergency water extraction in Millbrae: standing water removed from floors, carpet, garages and crawl spaces.',
                     'links' => [
                         [
-                            'anchor' => 'Emergency water extraction',
+                            'anchor' => 'Emergency water extraction in Millbrae',
                             'href' => '/emergency-water-extraction',
                             'pos' => 39,
                         ],
@@ -5619,7 +5620,7 @@ $PAGE_CONTENT = [
                     'text' => 'Structural drying in Millbrae: air movers, dehumidifiers and daily moisture readings.',
                     'links' => [
                         [
-                            'anchor' => 'Structural drying',
+                            'anchor' => 'Structural drying in Millbrae',
                             'href' => '/structural-drying',
                             'pos' => 30,
                         ],
@@ -5631,7 +5632,7 @@ $PAGE_CONTENT = [
                     'text' => 'Burst pipe cleanup in Millbrae: fast extraction and drying after a supply line fails.',
                     'links' => [
                         [
-                            'anchor' => 'Burst pipe cleanup',
+                            'anchor' => 'Burst pipe cleanup in Millbrae',
                             'href' => '/burst-pipe-water-damage',
                             'pos' => 31,
                         ],
@@ -5643,7 +5644,7 @@ $PAGE_CONTENT = [
                     'text' => 'Sewage backup cleanup in Millbrae: Category 3 cleanup and disinfection.',
                     'links' => [
                         [
-                            'anchor' => 'Sewage backup cleanup',
+                            'anchor' => 'Sewage backup cleanup in Millbrae',
                             'href' => '/sewage-backup-cleanup',
                             'pos' => 34,
                         ],
@@ -5655,7 +5656,7 @@ $PAGE_CONTENT = [
                     'text' => 'Crawl space water damage in Millbrae: pump-out and drying under raised hillside homes.',
                     'links' => [
                         [
-                            'anchor' => 'Crawl space water damage',
+                            'anchor' => 'Crawl space water damage in Millbrae',
                             'href' => '/crawl-space-water-damage',
                             'pos' => 37,
                         ],
@@ -5667,7 +5668,7 @@ $PAGE_CONTENT = [
                     'text' => 'Storm and flood damage in Millbrae: runoff and street water cleanup.',
                     'links' => [
                         [
-                            'anchor' => 'Storm and flood damage',
+                            'anchor' => 'Storm and flood damage in Millbrae',
                             'href' => '/storm-flood-water-damage',
                             'pos' => 35,
                         ],
@@ -5679,7 +5680,7 @@ $PAGE_CONTENT = [
                     'text' => 'Flooded garage and in-law unit cleanup in Millbrae: downhill garages and lower-level units.',
                     'links' => [
                         [
-                            'anchor' => 'Flooded garage and in-law unit',
+                            'anchor' => 'Flooded garage and in-law unit cleanup in Millbrae',
                             'href' => '/garage-in-law-unit-flooding',
                             'pos' => 51,
                         ],
@@ -5691,7 +5692,7 @@ $PAGE_CONTENT = [
                     'text' => 'Ceiling and roof leak damage in Millbrae: wet ceilings, attics and insulation.',
                     'links' => [
                         [
-                            'anchor' => 'Ceiling and roof leak damage',
+                            'anchor' => 'Ceiling and roof leak damage in Millbrae',
                             'href' => '/roof-leak-ceiling-water-damage',
                             'pos' => 41,
                         ],
@@ -5703,7 +5704,7 @@ $PAGE_CONTENT = [
                     'text' => 'Slab and hidden leak damage in Millbrae: leaks under floors and inside walls.',
                     'links' => [
                         [
-                            'anchor' => 'Slab and hidden leak damage',
+                            'anchor' => 'Slab and hidden leak damage in Millbrae',
                             'href' => '/slab-leak-hidden-leak-water-damage',
                             'pos' => 40,
                         ],
@@ -5715,7 +5716,7 @@ $PAGE_CONTENT = [
                     'text' => 'Water heater and appliance leaks in Millbrae: tanks, washers, dishwashers and fridges.',
                     'links' => [
                         [
-                            'anchor' => 'Water heater and appliance leaks',
+                            'anchor' => 'Water heater and appliance leaks in Millbrae',
                             'href' => '/water-heater-appliance-leak',
                             'pos' => 45,
                         ],
@@ -5727,7 +5728,7 @@ $PAGE_CONTENT = [
                     'text' => 'Mold remediation in Millbrae: containment, removal and moisture control.',
                     'links' => [
                         [
-                            'anchor' => 'Mold remediation',
+                            'anchor' => 'Mold remediation in Millbrae',
                             'href' => '/mold-remediation',
                             'pos' => 29,
                         ],
@@ -5739,7 +5740,7 @@ $PAGE_CONTENT = [
                     'text' => 'Condo water damage in Millbrae: multi-unit leaks with records for HOAs.',
                     'links' => [
                         [
-                            'anchor' => 'Condo water damage',
+                            'anchor' => 'Condo water damage in Millbrae',
                             'href' => '/condo-water-damage',
                             'pos' => 31,
                         ],
@@ -5751,7 +5752,7 @@ $PAGE_CONTENT = [
                     'text' => 'Commercial water damage in Millbrae: restaurants, shops, offices and hotels.',
                     'links' => [
                         [
-                            'anchor' => 'Commercial water damage',
+                            'anchor' => 'Commercial water damage in Millbrae',
                             'href' => '/commercial-water-damage',
                             'pos' => 36,
                         ],
@@ -5763,7 +5764,7 @@ $PAGE_CONTENT = [
                     'text' => 'Hardwood floor drying in Millbrae: original oak floors saved with drying mats.',
                     'links' => [
                         [
-                            'anchor' => 'Hardwood floor drying',
+                            'anchor' => 'Hardwood floor drying in Millbrae',
                             'href' => '/hardwood-floor-water-damage',
                             'pos' => 34,
                         ],
@@ -6873,7 +6874,7 @@ $PAGE_CONTENT = [
                 'faq' => [
                     'q' => 'How fast can a crew reach Burlingame?',
                     'a' => [
-                        'A crew is dispatched immediately after you call (650) 822-6798, at any hour.',
+                        'A crew is dispatched immediately after your call (650) 822-6798, at any hour.',
                     ],
                 ],
             ],
@@ -7061,7 +7062,7 @@ $PAGE_CONTENT = [
                         'text' => 'Emergency water extraction in Brisbane: pumps for garages, lower rooms and crawl spaces',
                         'links' => [
                             [
-                                'anchor' => 'Emergency water extraction',
+                                'anchor' => 'Emergency water extraction in Brisbane',
                                 'href' => '/emergency-water-extraction',
                                 'pos' => 88,
                             ],
@@ -7071,7 +7072,7 @@ $PAGE_CONTENT = [
                         'text' => 'Structural drying in Brisbane: dehumidifiers and daily readings',
                         'links' => [
                             [
-                                'anchor' => 'Structural drying',
+                                'anchor' => 'Structural drying in Brisbane',
                                 'href' => '/structural-drying',
                                 'pos' => 64,
                             ],
@@ -7081,7 +7082,7 @@ $PAGE_CONTENT = [
                         'text' => 'Flooded garage cleanup in Brisbane: street-level garages and lower units',
                         'links' => [
                             [
-                                'anchor' => 'Flooded garage cleanup',
+                                'anchor' => 'Flooded garage cleanup in Brisbane',
                                 'href' => '/garage-in-law-unit-flooding',
                                 'pos' => 73,
                             ],
@@ -7091,7 +7092,7 @@ $PAGE_CONTENT = [
                         'text' => 'Storm and flood cleanup in Brisbane: runoff and storm water',
                         'links' => [
                             [
-                                'anchor' => 'Storm and flood cleanup',
+                                'anchor' => 'Storm and flood cleanup in Brisbane',
                                 'href' => '/storm-flood-water-damage',
                                 'pos' => 60,
                             ],
@@ -7101,7 +7102,7 @@ $PAGE_CONTENT = [
                         'text' => 'Crawl space water damage in Brisbane: water under raised floors',
                         'links' => [
                             [
-                                'anchor' => 'Crawl space water damage',
+                                'anchor' => 'Crawl space water damage in Brisbane',
                                 'href' => '/crawl-space-water-damage',
                                 'pos' => 64,
                             ],
@@ -7111,7 +7112,7 @@ $PAGE_CONTENT = [
                         'text' => 'Burst pipe cleanup in Brisbane: older supply lines',
                         'links' => [
                             [
-                                'anchor' => 'Burst pipe cleanup',
+                                'anchor' => 'Burst pipe cleanup in Brisbane',
                                 'href' => '/burst-pipe-water-damage',
                                 'pos' => 51,
                             ],
@@ -7121,7 +7122,7 @@ $PAGE_CONTENT = [
                         'text' => 'Sewage backup cleanup in Brisbane: Category 3 cleanup',
                         'links' => [
                             [
-                                'anchor' => 'Sewage backup cleanup',
+                                'anchor' => 'Sewage backup cleanup in Brisbane',
                                 'href' => '/sewage-backup-cleanup',
                                 'pos' => 54,
                             ],
@@ -7131,7 +7132,7 @@ $PAGE_CONTENT = [
                         'text' => 'Roof leak and ceiling water damage in Brisbane: wind-driven rain',
                         'links' => [
                             [
-                                'anchor' => 'ceiling water damage',
+                                'anchor' => 'Roof leak and ceiling water damage in Brisbane',
                                 'href' => '/roof-leak-ceiling-water-damage',
                                 'pos' => 65,
                             ],
@@ -7141,7 +7142,7 @@ $PAGE_CONTENT = [
                         'text' => 'Slab and hidden leaks in Brisbane: leaks under floors and in walls',
                         'links' => [
                             [
-                                'anchor' => 'Slab and hidden leaks',
+                                'anchor' => 'Slab and hidden leaks in Brisbane',
                                 'href' => '/slab-leak-hidden-leak-water-damage',
                                 'pos' => 67,
                             ],
@@ -7151,7 +7152,7 @@ $PAGE_CONTENT = [
                         'text' => 'Water heater and appliance leaks in Brisbane',
                         'links' => [
                             [
-                                'anchor' => 'Water heater and appliance leaks',
+                                'anchor' => 'Water heater and appliance leaks in Brisbane',
                                 'href' => '/water-heater-appliance-leak',
                                 'pos' => 45,
                             ],
@@ -7161,7 +7162,7 @@ $PAGE_CONTENT = [
                         'text' => 'Mold remediation in Brisbane: fog and hillside moisture',
                         'links' => [
                             [
-                                'anchor' => 'Mold remediation',
+                                'anchor' => 'Mold remediation in Brisbane',
                                 'href' => '/mold-remediation',
                                 'pos' => 56,
                             ],
@@ -7171,7 +7172,7 @@ $PAGE_CONTENT = [
                         'text' => 'Condo and apartment water damage in Brisbane',
                         'links' => [
                             [
-                                'anchor' => 'Condo and apartment water damage',
+                                'anchor' => 'Condo and apartment water damage in Brisbane',
                                 'href' => '/condo-water-damage',
                                 'pos' => 45,
                             ],
@@ -7181,7 +7182,7 @@ $PAGE_CONTENT = [
                         'text' => 'Commercial water damage in Brisbane: Sierra Point offices and businesses',
                         'links' => [
                             [
-                                'anchor' => 'Commercial water damage',
+                                'anchor' => 'Commercial water damage in Brisbane',
                                 'href' => '/commercial-water-damage',
                                 'pos' => 73,
                             ],
@@ -7191,7 +7192,7 @@ $PAGE_CONTENT = [
                         'text' => 'Hardwood floor drying in Brisbane',
                         'links' => [
                             [
-                                'anchor' => 'Hardwood floor drying',
+                                'anchor' => 'Hardwood floor drying in Brisbane',
                                 'href' => '/hardwood-floor-water-damage',
                                 'pos' => 34,
                             ],
