@@ -9,6 +9,7 @@ $map_src = 'https://www.google.com/maps?q=' . rawurlencode($SITE['map_query']) .
 </main>
 <?php if ($show_map): ?>
 <div class="footer-map-wrap" aria-label="Map of San Bruno, California">
+  <a class="footer-map-fallback" href="<?= 'https://www.google.com/maps?q=' . rawurlencode($SITE['map_query']) ?>" target="_blank" rel="noopener">Map of San Bruno, CA 94066 — open in Google Maps</a>
   <iframe class="footer-map" title="Map: San Bruno, CA 94066" src="<?= esc($map_src) ?>" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 </div>
 <?php endif; ?>

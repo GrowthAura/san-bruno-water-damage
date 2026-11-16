@@ -10,6 +10,11 @@ require $ROOT . '/includes/functions.php';
 require $ROOT . '/includes/lead-handler.php';
 
 $PAGES = build_pages();
+// Sitemap lastmod + any date output use the user's (PKT) date, not the
+// server's UTC date — an export run at 04:00 PKT is still the previous
+// UTC day, which shipped a stale lastmod (2026-11-15) on the 2026-11-16
+// deploy. 10x round 2026-11-16, crawler P3.
+date_default_timezone_set('Asia/Karachi');
 $TODAY = date('Y-m-d');
 
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';

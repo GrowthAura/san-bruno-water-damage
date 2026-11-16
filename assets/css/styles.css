@@ -222,7 +222,7 @@ li{margin-bottom:.5em}
 /* ---------- Trust band ---------- */
 .trust-band{background:var(--ink-2);color:#DCE6EF;border-top:1px solid rgba(255,255,255,.08)}
 .trust-band ul{
-  list-style:none;margin:0;display:flex;flex-wrap:wrap;gap:8px 36px;
+  list-style:none;margin:0;display:flex;flex-wrap:wrap;gap:8px 16px;
   padding:18px 0;
 }
 .trust-band li{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:600}
@@ -238,7 +238,7 @@ li{margin-bottom:.5em}
 .sticky-aside{position:sticky;top:calc(var(--header-h) + 24px)}
 .brand-panel{
   background:var(--ink);color:#fff;border-radius:var(--radius-lg);
-  padding:30px 28px;box-shadow:var(--shadow-md);margin-bottom:20px;
+  padding:30px 27px;box-shadow:var(--shadow-md);margin-bottom:20px;
   border-top:4px solid var(--gold);
 }
 .brand-panel .panel-title{
@@ -397,8 +397,9 @@ li{margin-bottom:.5em}
 .detail-figure img{width:100%;aspect-ratio:16/9;object-fit:cover}
 
 /* ---------- Footer map + footer ---------- */
-.footer-map-wrap{height:340px}
-.footer-map{width:100%;height:100%;border:0;display:block}
+.footer-map-wrap{position:relative;height:340px;background:#E8EDF2}
+.footer-map-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 24px;color:var(--ink-2);font-weight:600;font-size:17px}
+.footer-map{position:relative;z-index:1;width:100%;height:100%;border:0;display:block}
 .site-footer{background:var(--ink);color:#B9C7D4;padding:64px 0 0}
 .footer-cols{display:grid;grid-template-columns:1.35fr 1fr 1fr 1.35fr;gap:40px;padding-bottom:48px}
 .footer-h{
@@ -472,7 +473,7 @@ li{margin-bottom:.5em}
   }
   .mobile-menu a{display:block;padding:10px 12px;border-radius:9px;font-size:17px}
   .mobile-menu a:hover{background:var(--gold-faint)}
-  .mobile-menu .btn{margin-top:12px;width:100%}
+  .mobile-menu .btn{margin-top:12px;width:100%;border-radius:999px}
   .split{grid-template-columns:1fr;gap:36px}
   .sticky-aside{position:static}
   .cards{grid-template-columns:repeat(2,1fr)}
@@ -529,7 +530,8 @@ li{margin-bottom:.5em}
   .mobile-head{flex-basis:100%;margin-left:0}
   .mobile-head .btn{flex:1}
   .hero-content{padding-top:20px;padding-bottom:36px}
-  .hero-content h1{font-size:1.75rem}
+  .hero-content h1{font-size:2rem}
+  h3{font-size:1.375rem}
   .hero-intro{margin-bottom:12px}
   .eyebrow{margin-bottom:10px}
 }

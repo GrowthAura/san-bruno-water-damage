@@ -345,6 +345,14 @@ function ld_local_business() {
         'description' => '24/7 emergency water damage restoration in San Bruno, CA 94066. Crew dispatched immediately.',
         'telephone' => $SITE['phone'],
         'url' => site_url('/'),
+        // Same social profiles as the footer links (verified 200). 10x round
+        // 2026-11-16, crawler P3: LocalBusiness had no sameAs.
+        'sameAs' => [
+            'https://www.facebook.com/profile.php?id=61596181217672',
+            'https://linktr.ee/sanbrunowaterdamage',
+            'https://gravatar.com/fully095adb1dee',
+            'https://trello.com/b/YtpL9vIU/san-bruno-water-damage',
+        ],
         'address' => [
             '@type' => 'PostalAddress',
             'addressLocality' => 'San Bruno',
