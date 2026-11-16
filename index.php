@@ -27,33 +27,33 @@ if ($path !== '/' && strlen($path) > 1 && str_ends_with($path, '/')) {
 }
 
 // 2. Sitemap (dynamic, loc + date-only lastmod).
-// Sitemap lastmod is an EXPLICIT per-page map — set 2026-11-16 by the
-// user's order: the 14 service pages carry today's date (2026-11-16);
-// the other 14 pages (home, about, contact, service-areas, 5 area pages,
-// 5 guides) carry 2026-11-15. The 14 service pages are the ones under
-// A-to-Z check in this round. To change a date, edit this map only —
-// never go back to a single $TODAY for all pages. Any slug missing from
-// the map falls back to $TODAY.
+// Sitemap lastmod is an EXPLICIT per-page map — set 2026-11-17 by the
+// user's order: the 16 form pages (home + 14 service pages + contact)
+// carry today's date (2026-11-17) — the form on those pages was just
+// fixed (no-cors) and proven working end-to-end; the other 12 pages
+// (about, service-areas, 5 area pages, 5 guides) carry 2026-11-15.
+// To change a date, edit this map only — never go back to a single
+// $TODAY for all pages. Any slug missing from the map falls back to $TODAY.
 $LASTMOD = [
-    // 2026-11-16 — the 14 service pages.
-    '/emergency-water-extraction' => '2026-11-16',
-    '/structural-drying' => '2026-11-16',
-    '/burst-pipe-water-damage' => '2026-11-16',
-    '/sewage-backup-cleanup' => '2026-11-16',
-    '/crawl-space-water-damage' => '2026-11-16',
-    '/storm-flood-water-damage' => '2026-11-16',
-    '/garage-in-law-unit-flooding' => '2026-11-16',
-    '/roof-leak-ceiling-water-damage' => '2026-11-16',
-    '/slab-leak-hidden-leak-water-damage' => '2026-11-16',
-    '/water-heater-appliance-leak' => '2026-11-16',
-    '/mold-remediation' => '2026-11-16',
-    '/condo-water-damage' => '2026-11-16',
-    '/commercial-water-damage' => '2026-11-16',
-    '/hardwood-floor-water-damage' => '2026-11-16',
-    // 2026-11-15 — home + about + contact + service-areas + 5 area pages + 5 guides.
-    '/' => '2026-11-15',
+    // 2026-11-17 — home + 14 service pages + contact (the 16 form pages).
+    '/' => '2026-11-17',
+    '/emergency-water-extraction' => '2026-11-17',
+    '/structural-drying' => '2026-11-17',
+    '/burst-pipe-water-damage' => '2026-11-17',
+    '/sewage-backup-cleanup' => '2026-11-17',
+    '/crawl-space-water-damage' => '2026-11-17',
+    '/storm-flood-water-damage' => '2026-11-17',
+    '/garage-in-law-unit-flooding' => '2026-11-17',
+    '/roof-leak-ceiling-water-damage' => '2026-11-17',
+    '/slab-leak-hidden-leak-water-damage' => '2026-11-17',
+    '/water-heater-appliance-leak' => '2026-11-17',
+    '/mold-remediation' => '2026-11-17',
+    '/condo-water-damage' => '2026-11-17',
+    '/commercial-water-damage' => '2026-11-17',
+    '/hardwood-floor-water-damage' => '2026-11-17',
+    '/contact' => '2026-11-17',
+    // 2026-11-15 — about + service-areas + 5 area pages + 5 guides.
     '/about' => '2026-11-15',
-    '/contact' => '2026-11-15',
     '/service-areas' => '2026-11-15',
     '/south-san-francisco-ca' => '2026-11-15',
     '/millbrae-ca' => '2026-11-15',
