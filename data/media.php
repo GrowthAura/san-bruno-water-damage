@@ -375,3 +375,19 @@ function hero_img_tag($img) {
     return '<img src="' . esc($img['src']) . '" alt="' . esc($img['alt']) . '" width="' . $w .
         '" height="' . $h . '" fetchpriority="high"' . $ss . $sz . '>';
 }
+
+function hero_preload_tag($img) {
+    // SPEED INDEX / LCP, 2026-11-17 (PSI mobile: Speed Index 3.9-4.1s,
+    // LCP 2.2s, hero <img> is the LCP element, resource load delay
+    // 280ms): preload the page's hero image so the browser discovers it
+    // in the <head> instead of after parsing the body. imagesrcset /
+    // imagesizes MUST match hero_img_tag() exactly, or the browser
+    // downloads the image twice. Returns '' when the page has no hero
+    // (honestly empty by design) or no srcset variants.
+    if (!$img) return '';
+    $ss = srcset_attr($img);
+    if ($ss === '') return '';
+    if (!preg_match('/srcset="([^"]+)"/', $ss, $m)) return '';
+    return '<link rel="preload" as="image" imagesrcset="' . esc($m[1]) .
+        '" imagesizes="(max-width: 768px) 100vw, 1280px" fetchpriority="high">';
+}

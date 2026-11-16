@@ -220,6 +220,7 @@ function render_home() {
         'canonical' => site_url('/'),
         'og_type' => 'website',
         'og_image' => $homeOg ? site_url($homeOg['src']) : null,
+        'hero_preload' => hero_preload_tag($homeHero),
         'ld' => ld_json([ld_local_business(), ld_website(), ld_webpage($homeHero ? site_url($homeHero['src']) : null), ld_breadcrumb_home(), ld_faq($FAQS), ld_howto($PROCESS_STEPS, $PROCESS_INTRO)]),
     ];
     $currentSlug = '/';
@@ -447,6 +448,7 @@ function render_page($slug, $page) {
         // stay website (no article type exists for them).
         'og_type' => in_array($page['type'], ['blog', 'guide'], true) ? 'article' : 'website',
         'og_image' => $pageOg ? site_url($pageOg['src']) : null,
+        'hero_preload' => hero_preload_tag($pageHero),
         'ld' => ld_json($graph),
     ];
     $currentSlug = $slug;
