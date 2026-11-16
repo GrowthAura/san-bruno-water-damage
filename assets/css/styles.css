@@ -349,7 +349,9 @@ li{margin-bottom:.5em}
 .faq-answer p{margin-bottom:0}
 
 /* ---------- Call strip / final CTA ---------- */
-.call-strip{background:var(--gold);color:var(--ink)}
+/* margin-top 20px (user order 2026-11-16 ~18:24 PKT, "thora sa"): the gold
+   strip sat flush against the block above it; a small gap only. */
+.call-strip{background:var(--gold);color:var(--ink);margin-top:20px}
 .call-strip .container{
   display:flex;align-items:center;justify-content:space-between;gap:24px;
   padding-top:26px;padding-bottom:26px;

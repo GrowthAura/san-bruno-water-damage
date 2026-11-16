@@ -22,7 +22,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/styles.css?v=14">
+<link rel="stylesheet" href="/assets/css/styles.css?v=15">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"LocalBusiness","@id":"https://www.sanbrunowaterdamagerestoration.us/#business","name":"San Bruno Water Damage Restoration","description":"24/7 emergency water damage restoration in San Bruno, CA 94066. Crew dispatched immediately.","telephone":"(650) 822-6798","url":"https://www.sanbrunowaterdamagerestoration.us/","sameAs":["https://www.facebook.com/profile.php?id=61596181217672","https://linktr.ee/sanbrunowaterdamage","https://gravatar.com/fully095adb1dee","https://trello.com/b/YtpL9vIU/san-bruno-water-damage"],"address":{"@type":"PostalAddress","addressLocality":"San Bruno","addressRegion":"CA","postalCode":"94066","addressCountry":"US"},"areaServed":[{"@type":"City","name":"San Bruno"},{"@type":"City","name":"South San Francisco"},{"@type":"City","name":"Millbrae"},{"@type":"City","name":"Pacifica"},{"@type":"City","name":"Burlingame"},{"@type":"City","name":"Brisbane"},{"@type":"AdministrativeArea","name":"San Mateo County"}],"openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"},"image":"https://www.sanbrunowaterdamagerestoration.us/assets/img/water-damage-restoration-hero-san-bruno.jpg"},{"@type":"WebSite","@id":"https://www.sanbrunowaterdamagerestoration.us/#website","url":"https://www.sanbrunowaterdamagerestoration.us/","name":"San Bruno Water Damage Restoration","inLanguage":"en","publisher":{"@id":"https://www.sanbrunowaterdamagerestoration.us/#business"}},{"@type":"WebPage","@id":"https://www.sanbrunowaterdamagerestoration.us/hardwood-floor-water-damage#webpage","url":"https://www.sanbrunowaterdamagerestoration.us/hardwood-floor-water-damage","name":"Hardwood Floor Water Damage San Bruno | Wet Floor Drying 24/7","description":"Hardwood floor water damage in San Bruno, CA 94066. Wet floors dried in place before they cup or buckle. Call (650) 822-6798 24/7.","inLanguage":"en","isPartOf":{"@id":"https://www.sanbrunowaterdamagerestoration.us/#website"},"about":{"@id":"https://www.sanbrunowaterdamagerestoration.us/#business"},"breadcrumb":{"@id":"https://www.sanbrunowaterdamagerestoration.us/hardwood-floor-water-damage#breadcrumb"},"speakable":{"@type":"SpeakableSpecification","cssSelector":[".faq-list details summary h3"]},"primaryImageOfPage":"https://www.sanbrunowaterdamagerestoration.us/assets/img/hardwood-floor-water-damage-san-bruno.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.sanbrunowaterdamagerestoration.us/"},{"@type":"ListItem","position":2,"name":"Hardwood Floor Water Damage","item":"https://www.sanbrunowaterdamagerestoration.us/hardwood-floor-water-damage"}],"@id":"https://www.sanbrunowaterdamagerestoration.us/hardwood-floor-water-damage#breadcrumb"},{"@type":"Service","@id":"https://www.sanbrunowaterdamagerestoration.us/hardwood-floor-water-damage#service","name":"Hardwood Floor Water Damage in San Bruno","description":"Hardwood floor water damage in San Bruno, CA 94066. Wet floors dried in place before they cup or buckle. Call (650) 822-6798 24/7.","url":"https://www.sanbrunowaterdamagerestoration.us/hardwood-floor-water-damage","serviceType":"Water Damage Restoration","provider":{"@id":"https://www.sanbrunowaterdamagerestoration.us/#business"},"areaServed":{"@type":"City","name":"San Bruno"},"image":"https://www.sanbrunowaterdamagerestoration.us/assets/img/hardwood-floor-water-damage-san-bruno.jpg"},{"@type":"FAQPage","@id":"https://www.sanbrunowaterdamagerestoration.us/hardwood-floor-water-damage#faqpage","mainEntityOfPage":{"@id":"https://www.sanbrunowaterdamagerestoration.us/hardwood-floor-water-damage#webpage"},"mainEntity":[{"@type":"Question","name":"How long does it take to dry a hardwood floor?","acceptedAnswer":{"@type":"Answer","text":"Usually three to seven days, depending on how wet it got, the type of wood and whether the subfloor is also wet."}},{"@type":"Question","name":"Will my floor go back to flat?","acceptedAnswer":{"@type":"Answer","text":"Minor cupping often flattens out as the wood dries. Heavier cupping may need sanding and refinishing once the floor is fully dry."}},{"@type":"Question","name":"Can engineered hardwood be dried?","acceptedAnswer":{"@type":"Answer","text":"Sometimes. Thicker engineered floors with plywood cores dry better than thin ones with fiberboard cores."}},{"@type":"Question","name":"Does insurance cover water-damaged hardwood?","acceptedAnswer":{"@type":"Answer","text":"Sudden water damage is often covered. Damage from long-term leaks is often excluded. Check your policy."}}]}]}</script></head>
 <body>
 <header class="site-header">
@@ -99,14 +99,12 @@
     <div class="form-card" id="request-service">
   <p class="form-title">Request Emergency Help</p>
   <p>Fill this in and we will call you back. For immediate help, call <a href="tel:+16508226798">(650) 822-6798</a>.</p>
-      <div class="form-note">
-    <p><strong>This form does not send email yet.</strong> No email address has been set up for requests.</p>
-  </div>
-  <form method="post" action="" novalidate>
+  <div class="form-note" id="form-status" role="status" hidden></div>
+  <form id="lead-form" method="post" action="/api/contact" novalidate>
     <label for="f-name">Your name</label>
-    <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120" value="">
+    <input id="f-name" name="name" type="text" autocomplete="name" required maxlength="120">
     <label for="f-phone">Phone number</label>
-    <input id="f-phone" name="phone" type="tel" autocomplete="tel" required maxlength="40" value="">
+    <input id="f-phone" name="phone" type="tel" autocomplete="tel" required maxlength="40">
     <label for="f-service">What is happening?</label>
     <select id="f-service" name="service">
       <option value="">Select a service</option>
@@ -128,13 +126,14 @@
     </select>
     <label for="f-message">Tell us what happened</label>
     <textarea id="f-message" name="message" required maxlength="2000"></textarea>
+    <input type="hidden" name="page" value="https://www.sanbrunowaterdamagerestoration.us/hardwood-floor-water-damage">
     <p class="hp-field" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off" value=""></label></p>
     <button class="btn btn-navy" type="submit">Request Emergency Help</button>
   </form>
-  </div>
+</div>
   </div>
   
-<section class="call-strip"><div class="container"><p>Call (650) 822-6798 now for water damage San Bruno 94066 help. A crew is dispatched immediately.</p><a class="btn btn-navy" href="tel:+16508226798">(650) 822-6798</a></div></section></main>
+<section class="call-strip"><div class="container"><p>Call (650) 822-6798 now for hardwood floor water damage San Bruno 94066 help. A crew is dispatched immediately.</p><a class="btn btn-navy" href="tel:+16508226798">(650) 822-6798</a></div></section></main>
 <div class="footer-map-wrap" aria-label="Map of San Bruno, California">
   <a class="footer-map-fallback" href="https://www.google.com/maps?q=San%20Bruno%2C%20CA%2094066" target="_blank" rel="noopener">Map of San Bruno, CA 94066 — open in Google Maps</a>
   <iframe class="footer-map" title="Map: San Bruno, CA 94066" src="https://www.google.com/maps?q=San%20Bruno%2C%20CA%2094066&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -202,6 +201,6 @@
   <span aria-hidden="true">&#9742;</span><span>(650) 822-6798</span>
 </a>
 <div class="mobile-call-spacer" aria-hidden="true"></div>
-<script src="/assets/js/main.js?v=4" defer></script>
+<script src="/assets/js/main.js?v=5" defer></script>
 </body>
 </html>
