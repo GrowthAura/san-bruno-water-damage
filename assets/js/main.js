@@ -114,9 +114,12 @@
   window.addEventListener('scroll', callbar, { passive: true });
   callbar();
 
-  // Lead form: POST to the Cloudflare Pages Function /api/contact, which
-  // emails the lead to the owner via MailChannels. The result shows in
-  // #form-status in place; the form stays so another message can be sent.
+  // Lead form: POST straight to the Google Sheets webhook (Apps Script,
+  // bound to the "San Bruno Water Damage - Website Leads" sheet) from the
+  // browser. The script logs one row + emails the owner and answers with
+  // a redirect page, so any HTTP 200 means the lead landed. The result
+  // shows in #form-status in place; the form stays so another message
+  // can be sent.
   var leadForm = document.getElementById('lead-form');
   if (leadForm) {
     var statusBox = document.getElementById('form-status');
@@ -139,19 +142,25 @@
         showStatus('Please enter your name, phone number and what happened.', true);
         return;
       }
+      // Honeypot: bots fill the hidden "website" field. Answer success and
+      // send nothing, so the trap stays invisible.
+      if ((data.get('website') || '').toString().trim() !== '') {
+        showStatus('Thank you. Your message has been sent — we will call you back shortly. For immediate help, call (650) 822-6798.', false);
+        leadForm.reset();
+        return;
+      }
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+      // Plain FormData POST (the script reads e.parameter). The webhook
+      // answers with a redirect page, not JSON — a 200 means the lead
+      // landed in the Sheet.
       fetch(leadForm.action, {
         method: 'POST',
         body: data,
         headers: { 'Accept': 'application/json' }
       }).then(function (resp) {
-        return resp.json().catch(function () { return { ok: false }; });
-      }).then(function (result) {
-        if (result && result.ok) {
+        if (resp && resp.ok) {
           showStatus('Thank you. Your message has been sent — we will call you back shortly. For immediate help, call (650) 822-6798.', false);
           leadForm.reset();
-        } else if (result && result.errors) {
-          showStatus(result.errors.join(' '), true);
         } else {
           showStatus('Sorry — your message could not be sent. Please call (650) 822-6798 for immediate help. A crew is dispatched immediately.', true);
         }
