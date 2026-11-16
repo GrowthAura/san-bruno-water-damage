@@ -380,7 +380,14 @@ function render_page($slug, $page, $form = null) {
     }
     $crumbs[] = ['label' => $crumbLabel];
     $pageHero = page_img($slug, 'hero');
-    $pageOg = $pageHero ?: og_fallback_img();
+    // OGIMAGE FIX, 2026-11-16 (crawler Pass A P2-1, qa/FINDINGS-OGIMAGE-FIX-2026-11-16.md):
+    // 5 pages (about, contact, 3 guides) have no 'hero' but DO have a
+    // 'detail' in-page photo; og:image must show the page's own photo, not
+    // the storm-flood fallback. Pages with no photo at all (emergency,
+    // sewage, mold — hero-less by design) still fall back to the
+    // storm-flood default. $pageHero / schema $heroUrl stay unchanged
+    // (honest: null when a page has no hero banner).
+    $pageOg = $pageHero ?: page_img($slug, 'detail') ?: og_fallback_img();
     $heroUrl = $pageHero ? site_url($pageHero['src']) : null;
     // Social sharing falls back to the site-wide og image when a page has no
     // own hero (Cycle 3 P2-1); schema $heroUrl stays honest (null = no image).
