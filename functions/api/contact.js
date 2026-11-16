@@ -52,29 +52,7 @@ async function mailchannelsSend(subject, body) {
 
 export async function onRequestGet(context) {
   // Health check: proves the Function is deployed and routing. GET is not
-  // a form submission — it only answers "alive". (Added 2026-11-16 after
-  // the live form showed the failure message: distinguishes "function not
-  // routing" from "MailChannels rejected the mail".)
-  const url = new URL(context.request.url);
-  if (url.searchParams.get('diag') === 'send-test') {
-    // TEMPORARY diagnostic (added 2026-11-16, REMOVE after use): first
-    // proves ANY outbound fetch works from this Function (GET example.com),
-    // then attempts ONE real MailChannels send and returns its exact
-    // status + message, so the failure reason is visible instead of
-    // guessed. Sends to the owner's address only, like a real lead.
-    let ex = { status: 0, detail: '' };
-    try {
-      const er = await fetch('https://example.com/', { method: 'GET' });
-      ex = { status: er.status, detail: (await er.text().catch(() => '')).slice(0, 100) };
-    } catch (e) {
-      ex = { status: 0, detail: String(e).slice(0, 200) };
-    }
-    const r = await mailchannelsSend(
-      'Diag test — San Bruno form endpoint — ' + new Date().toISOString(),
-      'Diagnostic test send from the /api/contact function. Please ignore.'
-    );
-    return json({ ok: r.ok, example: ex, mc_status: r.status, mc_body: r.detail }, r.ok ? 200 : 502);
-  }
+  // a form submission — it only answers "alive".
   return json({ ok: true, function: 'contact' }, 200);
 }
 
