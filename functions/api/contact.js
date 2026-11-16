@@ -31,6 +31,14 @@ function json(obj, status) {
   });
 }
 
+export function onRequestGet() {
+  // Health check: proves the Function is deployed and routing. GET is not
+  // a form submission — it only answers "alive". (Added 2026-11-16 after
+  // the live form showed the failure message: distinguishes "function not
+  // routing" from "MailChannels rejected the mail".)
+  return json({ ok: true, function: 'contact' }, 200);
+}
+
 export async function onRequestPost(context) {
   const { request } = context;
 
