@@ -33,7 +33,7 @@ global $SITE, $SERVICES, $AREAS, $COST_GUIDE, $STORM_GUIDE;
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
 <link rel="preload" href="/assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/styles.css?v=13">
+<link rel="stylesheet" href="/assets/css/styles.css?v=14">
 <?= $HEAD['ld'] ?? '' ?>
 </head>
 <body>

@@ -355,6 +355,10 @@ li{margin-bottom:.5em}
   padding-top:26px;padding-bottom:26px;
 }
 .call-strip p{margin-bottom:0;font-weight:600;font-size:1.125rem}
+/* 2026-11-16 sitemap-split round: the phone button wrapped to 2 lines at
+   desktop (192.7x79px at 1280px — the flex <p> squeezed it). The number
+   must never break mid-number. */
+.call-strip .btn{flex-shrink:0;white-space:nowrap}
 .final-cta{padding:72px 0;background:var(--paper-2)}
 .final-cta-card{
   background:var(--ink);color:#fff;border-radius:var(--radius-lg);
