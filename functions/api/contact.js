@@ -31,11 +31,42 @@ function json(obj, status) {
   });
 }
 
-export function onRequestGet() {
+async function mailchannelsSend(subject, body) {
+  try {
+    const resp = await fetch(MAILCHANNELS_URL, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        personalizations: [{ to: [{ email: TO_EMAIL, name: TO_NAME }] }],
+        from: { email: FROM_EMAIL, name: FROM_NAME },
+        subject,
+        content: [{ type: 'text/plain', value: body }],
+      }),
+    });
+    const detail = await resp.text().catch(() => '');
+    return { ok: resp.ok, status: resp.status, detail: detail.slice(0, 500) };
+  } catch (err) {
+    return { ok: false, status: 0, detail: String(err).slice(0, 500) };
+  }
+}
+
+export async function onRequestGet(context) {
   // Health check: proves the Function is deployed and routing. GET is not
   // a form submission — it only answers "alive". (Added 2026-11-16 after
   // the live form showed the failure message: distinguishes "function not
   // routing" from "MailChannels rejected the mail".)
+  const url = new URL(context.request.url);
+  if (url.searchParams.get('diag') === 'send-test') {
+    // TEMPORARY diagnostic (added 2026-11-16, REMOVE after use): attempts
+    // ONE real MailChannels send and returns its exact status + message, so
+    // the failure reason is visible instead of guessed. Sends to the
+    // owner's address only, like a real lead.
+    const r = await mailchannelsSend(
+      'Diag test — San Bruno form endpoint — ' + new Date().toISOString(),
+      'Diagnostic test send from the /api/contact function. Please ignore.'
+    );
+    return json({ ok: r.ok, mc_status: r.status, mc_body: r.detail }, r.ok ? 200 : 502);
+  }
   return json({ ok: true, function: 'contact' }, 200);
 }
 
@@ -96,25 +127,10 @@ export async function onRequestPost(context) {
     'Call the lead back at ' + phone + '.',
   ].join('\n');
 
-  try {
-    const resp = await fetch(MAILCHANNELS_URL, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        personalizations: [{ to: [{ email: TO_EMAIL, name: TO_NAME }] }],
-        from: { email: FROM_EMAIL, name: FROM_NAME },
-        subject,
-        content: [{ type: 'text/plain', value: body }],
-      }),
-    });
-    if (!resp.ok) {
-      const detail = await resp.text().catch(() => '');
-      console.error('MailChannels send failed', resp.status, detail.slice(0, 500));
-      return json({ ok: false, error: 'send_failed' }, 502);
-    }
-    return json({ ok: true }, 200);
-  } catch (err) {
-    console.error('MailChannels send error', err);
+  const r = await mailchannelsSend(subject, body);
+  if (!r.ok) {
+    console.error('MailChannels send failed', r.status, r.detail);
     return json({ ok: false, error: 'send_failed' }, 502);
   }
+  return json({ ok: true }, 200);
 }
