@@ -116,10 +116,10 @@
 
   // Lead form: POST straight to the Google Sheets webhook (Apps Script,
   // bound to the "San Bruno Water Damage - Website Leads" sheet) from the
-  // browser. The script logs one row + emails the owner and answers with
-  // a redirect page, so any HTTP 200 means the lead landed. The result
-  // shows in #form-status in place; the form stays so another message
-  // can be sent.
+  // browser. The script logs one row + emails the owner. The fetch uses
+  // mode 'no-cors' (the webhook's redirect breaks a CORS fetch — see the
+  // fetch block below). The result shows in #form-status in place; the
+  // form stays so another message can be sent.
   var leadForm = document.getElementById('lead-form');
   if (leadForm) {
     var statusBox = document.getElementById('form-status');
@@ -150,20 +150,21 @@
         return;
       }
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
-      // Plain FormData POST (the script reads e.parameter). The webhook
-      // answers with a redirect page, not JSON — a 200 means the lead
-      // landed in the Sheet.
+      // Plain FormData POST (the script reads e.parameter). Fetch with
+      // mode 'no-cors': the Apps Script webhook answers with a redirect
+      // page, and a normal CORS fetch fails on that redirect even though
+      // the lead already landed (row + email) — the visitor saw the
+      // failure message for a lead that WAS saved (2026-11-16 live test).
+      // With no-cors the response is opaque, so there is no resp.ok to
+      // check — the fetch resolving means the POST was sent and the lead
+      // is in the Sheet. (Same pattern as Pleasant Grove, proven live.)
       fetch(leadForm.action, {
         method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' }
-      }).then(function (resp) {
-        if (resp && resp.ok) {
-          showStatus('Thank you. Your message has been sent — we will call you back shortly. For immediate help, call (650) 822-6798.', false);
-          leadForm.reset();
-        } else {
-          showStatus('Sorry — your message could not be sent. Please call (650) 822-6798 for immediate help. A crew is dispatched immediately.', true);
-        }
+        mode: 'no-cors',
+        body: data
+      }).then(function () {
+        showStatus('Thank you. Your message has been sent — we will call you back shortly. For immediate help, call (650) 822-6798.', false);
+        leadForm.reset();
       }).catch(function () {
         showStatus('Sorry — your message could not be sent. Please call (650) 822-6798 for immediate help. A crew is dispatched immediately.', true);
       }).finally(function () {
