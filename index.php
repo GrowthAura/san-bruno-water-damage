@@ -7,7 +7,6 @@ $ROOT = __DIR__;
 require $ROOT . '/data/pages.php';
 require $ROOT . '/data/media.php';
 require $ROOT . '/includes/functions.php';
-require $ROOT . '/includes/lead-handler.php';
 
 $PAGES = build_pages();
 // Sitemap lastmod + any date output use the user's (PKT) date, not the
@@ -17,7 +16,6 @@ $PAGES = build_pages();
 date_default_timezone_set('Asia/Karachi');
 $TODAY = date('Y-m-d');
 
-$method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 $rawPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 $path = rawurldecode($rawPath);
 
@@ -107,20 +105,17 @@ if ($isStatic) {
     exit;
 }
 
-// 4. Lead form submission (homepage or any known page). No mail is sent;
-// the renderer shows an honest notice instead.
-$form = null;
-if ($method === 'POST' && ($path === '/' || isset($PAGES[$path]))) {
-    $form = handle_lead_post($_POST);
-}
+// 4. Lead form submissions are handled by the Cloudflare Pages Function
+// at /api/contact (functions/api/contact.js) — the live site is static,
+// so there is no PHP post handling here. The form posts with fetch.
 
 // 5. Routes.
 if ($path === '/') {
-    render_home($form);
+    render_home();
     exit;
 }
 if (isset($PAGES[$path])) {
-    render_page($path, $PAGES[$path], $form);
+    render_page($path, $PAGES[$path]);
     exit;
 }
 
@@ -162,12 +157,38 @@ function hero_buttons($formTarget = '#request-service') {
         '</div>';
 }
 
-function call_strip() {
+function call_strip($servicePhrase = null) {
     global $SITE;
+    $what = $servicePhrase ?: 'water damage';
     return '<section class="call-strip"><div class="container">' .
-        '<p>Call ' . esc($SITE['phone']) . ' now for water damage San Bruno 94066 help. A crew is dispatched immediately.</p>' .
+        '<p>Call ' . esc($SITE['phone']) . ' now for ' . esc($what) . ' San Bruno 94066 help. A crew is dispatched immediately.</p>' .
         '<a class="btn btn-navy" href="' . esc($SITE['phone_href']) . '">' . esc($SITE['phone']) . '</a>' .
         '</div></section>';
+}
+
+// Per-service call-strip line (user order 2026-11-16 ~18:23 PKT): each of
+// the 14 service pages names its own service in the strip. Phrases are the
+// plain service names from the user's order, verified against the service
+// pages in data/pages.php (H1s) — nothing invented. Any other page gets
+// null and keeps the generic "water damage" line.
+function service_strip_phrase($slug) {
+    static $map = [
+        '/emergency-water-extraction' => 'emergency water extraction',
+        '/structural-drying' => 'structural drying',
+        '/burst-pipe-water-damage' => 'burst pipe water damage',
+        '/sewage-backup-cleanup' => 'sewage backup cleanup',
+        '/crawl-space-water-damage' => 'crawl space water damage',
+        '/storm-flood-water-damage' => 'storm flood water damage',
+        '/garage-in-law-unit-flooding' => 'garage and in-law unit flooding',
+        '/roof-leak-ceiling-water-damage' => 'roof leak and ceiling water damage',
+        '/slab-leak-hidden-leak-water-damage' => 'slab leak and hidden leak water damage',
+        '/water-heater-appliance-leak' => 'water heater and appliance leak',
+        '/mold-remediation' => 'mold remediation',
+        '/condo-water-damage' => 'condo water damage',
+        '/commercial-water-damage' => 'commercial water damage',
+        '/hardwood-floor-water-damage' => 'hardwood floor water damage',
+    ];
+    return $map[$slug] ?? null;
 }
 
 function final_cta_compact($formTarget = '#request-service') {
@@ -180,7 +201,7 @@ function final_cta_compact($formTarget = '#request-service') {
     return $out;
 }
 
-function render_home($form = null) {
+function render_home() {
     global $ROOT, $SITE, $HOME_META, $TRUST, $FIRST_STEPS, $SERVICES, $SERVICES_H2,
         $SERVICES_INTRO, $WHY_H2, $WHY_INTRO, $WHY_REASONS, $PROCESS_H2,
         $PROCESS_INTRO, $PROCESS_STEPS, $CATEGORIES_H2, $CATEGORIES_INTRO,
@@ -362,7 +383,7 @@ function render_home($form = null) {
     require $ROOT . '/includes/footer.php';
 }
 
-function render_page($slug, $page, $form = null) {
+function render_page($slug, $page) {
     global $ROOT, $SITE, $HOME_META, $PAGES, $AREAS, $HOODS, $HOODS_INTRO, $HOODS_HUB_LINE, $NEARBY_INTRO, $STORM_INTRO, $STORM_BULLETS;
     $meta = page_meta($slug, $PAGES);
     $crumbs = [['label' => 'Home', 'href' => '/']];
@@ -468,7 +489,7 @@ function render_page($slug, $page, $form = null) {
   </div>
   <?php endif; ?>
 
-<?= call_strip() ?>
+<?= call_strip($page['type'] === 'service' ? service_strip_phrase($slug) : null) ?>
 <?php
     require $ROOT . '/includes/footer.php';
 }

@@ -113,4 +113,53 @@
   }
   window.addEventListener('scroll', callbar, { passive: true });
   callbar();
+
+  // Lead form: POST to the Cloudflare Pages Function /api/contact, which
+  // emails the lead to the owner via MailChannels. The result shows in
+  // #form-status in place; the form stays so another message can be sent.
+  var leadForm = document.getElementById('lead-form');
+  if (leadForm) {
+    var statusBox = document.getElementById('form-status');
+    var submitBtn = leadForm.querySelector('button[type="submit"]');
+    var submitLabel = submitBtn ? submitBtn.textContent : '';
+    function showStatus(text, isError) {
+      if (!statusBox) return;
+      statusBox.hidden = false;
+      statusBox.setAttribute('role', isError ? 'alert' : 'status');
+      statusBox.innerHTML = '<p><strong>' + text + '</strong></p>';
+      statusBox.scrollIntoView({ block: 'nearest' });
+    }
+    leadForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data = new FormData(leadForm);
+      var name = (data.get('name') || '').toString().trim();
+      var phone = (data.get('phone') || '').toString().trim();
+      var message = (data.get('message') || '').toString().trim();
+      if (!name || !phone || !message) {
+        showStatus('Please enter your name, phone number and what happened.', true);
+        return;
+      }
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+      fetch(leadForm.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      }).then(function (resp) {
+        return resp.json().catch(function () { return { ok: false }; });
+      }).then(function (result) {
+        if (result && result.ok) {
+          showStatus('Thank you. Your message has been sent — we will call you back shortly. For immediate help, call (650) 822-6798.', false);
+          leadForm.reset();
+        } else if (result && result.errors) {
+          showStatus(result.errors.join(' '), true);
+        } else {
+          showStatus('Sorry — your message could not be sent. Please call (650) 822-6798 for immediate help. A crew is dispatched immediately.', true);
+        }
+      }).catch(function () {
+        showStatus('Sorry — your message could not be sent. Please call (650) 822-6798 for immediate help. A crew is dispatched immediately.', true);
+      }).finally(function () {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = submitLabel; }
+      });
+    });
+  }
 })();
