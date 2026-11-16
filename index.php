@@ -362,7 +362,7 @@ function render_home() {
 </div></section>
 <section class="section section-cream"><div class="container content-block">
   <h2><?= esc($FAQ_H2) ?></h2>
-  <div class="faq-list">
+  <div class="faq-list faq-list-home">
     <?php foreach ($FAQS as $f): ?>
     <details open>
       <summary><h3><?= esc($f['q']) ?></h3><span class="faq-toggle" aria-hidden="true">+</span></summary>

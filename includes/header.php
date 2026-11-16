@@ -34,7 +34,19 @@ global $SITE, $SERVICES, $AREAS, $COST_GUIDE, $STORM_GUIDE;
 <link rel="preload" href="/assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <?= $HEAD['hero_preload'] ?? '' ?>
-<link rel="stylesheet" href="/assets/css/styles.css?v=15">
+<?php
+// SPEED INDEX round 2026-11-17: critical CSS (above-fold only, incl. the
+// metric-matched Georgia/Arial fallback @font-face overrides) inlined in
+// <head> so first paint is fully styled with zero render-blocking CSS;
+// the full sheet loads async via preload+onload and applies on top.
+// <noscript> keeps the full sheet for no-JS visitors. ?v=16 busts the
+// cache (was ?v=15). The 3 webfont @font-face blocks stay in the deferred
+// sheet only — fallbacks are metric-matched, so they are not first-paint
+// critical. See qa/extract-critical-css.py for the extraction.
+$__critical = @file_get_contents(__DIR__ . '/../assets/css/critical.css');
+if ($__critical !== false && $__critical !== ''): ?><style><?= $__critical ?></style><?php endif; ?>
+<link rel="preload" href="/assets/css/styles.css?v=16" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="/assets/css/styles.css?v=16"></noscript>
 <?= $HEAD['ld'] ?? '' ?>
 </head>
 <body>
